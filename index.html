@@ -28,9 +28,10 @@
 		$('#m').val('');
 		return false;
 	  });
-	  socket.on('chat message', function(msg){
+	  // Message soll in dem Fenster nicht angezeigt werden
+	  /*socket.on('chat message', function(msg){
 		$('#messages').append($('<li>').text(msg));
-	  });
+	  }); */
 	</script>
   </body>
 </html>

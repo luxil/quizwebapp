@@ -46,10 +46,10 @@
 <button id="button3" type="submit">C</button> 
 <button id="button4" type="submit">D</button>
 
-<p1><a href="#" onclick="ClickButton();">A</a></p1>
-<p2><a href="#" onclick="ClickButton();">B</a></p2>
-<p3><a href="#" onclick="ClickButton();">C</a></p3>
-<p4><a href="#" onclick="ClickButton();">D</a></p4>
+<p1><a href="#" onclick="ClickButton('A');">A</a></p1>
+<p2><a href="#" onclick="ClickButton('B');">B</a></p2>
+<p3><a href="#" onclick="ClickButton('C');">C</a></p3>
+<p4><a href="#" onclick="ClickButton('D');">D</a></p4>
 
     <form action="">
       <input id="m" autocomplete="off" /><button>Send</button>
@@ -64,8 +64,8 @@
 		$('#m').val('');
 		return false;
 	  });
-      function ClickButton(){
-        socket.emit('chat message', 'a');
+      function ClickButton(value){
+        socket.emit('chat message', value);
         return false;
       };
 	  // Message soll in dem Fenster nicht angezeigt werden

@@ -64,6 +64,10 @@
 		$('#m').val('');
 		return false;
 	  });
+      function ClickButton(){
+        socket.emit('chat message', 'a');
+        return false;
+      };
 	  // Message soll in dem Fenster nicht angezeigt werden
 	  /*socket.on('chat message', function(msg){
 		$('#messages').append($('<li>').text(msg));

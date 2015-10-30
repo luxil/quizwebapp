@@ -3,6 +3,7 @@ var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
+var addQuestion = require('./mongo');
 
 app.get('/display', function(req, res){
     res.sendFile(path.join(__dirname,'/display.html'));
@@ -11,6 +12,8 @@ app.get('/', function(req, res){
   //res.send('<h1>Hello world</h1>');
   res.sendFile(__dirname + '/index.html');
 });
+
+addQuestion.addQuestions('karo?','linh','byron','max','moritz');
 
 io.on('connection', function(socket){
   console.log('a user connected');

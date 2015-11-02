@@ -1,17 +1,24 @@
-
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
 var addQuestion = require('./mongo');
+var quizServer = require('./quizServer')
+
+app.use('/', express.static(__dirname,'/'));
 
 app.get('/display', function(req, res){
     res.sendFile(path.join(__dirname,'/display.html'));
 });
 app.get('/', function(req, res){
-  //res.send('<h1>Hello world</h1>');
+
   res.sendFile(__dirname + '/index.html');
 });
+app.get('/admin',function(req,res){
+  res.sendFile(__dirname + '/quizmaster.html');
+});
+
 
 addQuestion.addQuestions('karo?','linh','byron','max','moritz');
 
@@ -23,6 +30,9 @@ io.on('connection', function(socket){
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
 	io.emit('chat message', msg);
+  });
+  socket.on('startQuiz',function(){
+    quizServer.init();
   });
 });
 

@@ -20,7 +20,7 @@ var actionMenu = function(db) {
                 addAnswer(dbConn);
                 break;
             case "2":
-                editQuestions(dbConn);
+                listQuestions(dbConn);
                 break;
             case "3":
                 removeQuestion(dbConn);
@@ -76,31 +76,30 @@ function addAnswer(db){
     });
 }
 
-var editQuestions = function(db){
+var listQuestions = function(db){
     //db.collection(myCollection).find({},{},{}).toArray(
+
     db.collection(myCollection).find({},{},{}).toArray(
     function(err, docs){
-        rl.question("Do you want to show the questions with the answers? [y] or [n]", function(answer){
+        rl.question("Do you want to show the questions with the answers? [y] or [n]: ", function(answer){
             console.log("\nHere is the list: ");
             if (answer.toLocaleLowerCase() == "y"){
                 for(index in docs){
-                    console.log(index + ". " + docs[index]);
-                    actionMenu(dbConn);
+                    console.log(index + ".")
+                    console.log(docs[index]);
+                    console.log("\n");
                 }
             }
             else if (answer.toLowerCase() == "n"){
                 for(index in docs){
                     console.log(index + ". " + docs[index].question);
-                    actionMenu(dbConn);
                 }
             }
             else {
                 console.log("Invalid input. Back to Menu");
-                actionMenu(dbConn);
             }
-
+        actionMenu(dbConn);
         });
-        //actionMenu(dbConn);
     }
     );
 }

@@ -9,7 +9,7 @@ var myCollection = "Fragen";
 var dbConn;
 
 var actionMenu = function(db) {
-    console.log("What do you want to do?");
+    console.log("\nWhat do you want to do?");
     console.log("[1] Add question");
     console.log("[2] Show questions");
     console.log("[3] Remove question");
@@ -20,7 +20,7 @@ var actionMenu = function(db) {
                 addAnswer(dbConn);
                 break;
             case "2":
-                listBooks(dbConn);
+                listQuestions(dbConn);
                 break;
             case "q":
                 process.exit();
@@ -73,22 +73,14 @@ function addAnswer(db){
     });
 }
 
-var listQuestions = function(db){
-    db.collection(myCollection).find({},{},{}).toArray(
-        function(err, docs){
-            for(index in docs){
-                console.log(docs[index]);
-            }
-            actionMenu();
-        }
-    );
-}
-var listBooks = function(db){
+var listQuestions= function(db){
+    //db.collection(myCollection).find({},{},{}).toArray(
     db.collection(myCollection).find({},{},{}).toArray(
     function(err, docs){
-        console.log("Here is the list: ");
+        console.log("\nHere is the list: ");
+        var numQuestion = 1;
         for(index in docs){
-            console.log(docs[index]);
+            console.log(index + ". " + docs[index].question);
         }
         actionMenu(dbConn);
     }
@@ -99,6 +91,7 @@ MongoClient.connect(dbHost, function(err, db){
     if ( err ) throw err;
     dbConn = db;
     actionMenu();
+    console.log("connect");
 });
 
 

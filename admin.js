@@ -11,16 +11,19 @@ var dbConn;
 var actionMenu = function(db) {
     console.log("\nWhat do you want to do?");
     console.log("[1] Add question");
-    console.log("[2] Show questions");
+    console.log("[2] Show/Edit questions");
     console.log("[3] Remove question");
     console.log("[Q] Quit programm");
-    rl.question("Enter the number: ", function(input){
+    rl.question("Enter a number or a letter: ", function(input){
         switch(input.toLowerCase()){
             case "1":
                 addAnswer(dbConn);
                 break;
             case "2":
-                listQuestions(dbConn);
+                editQuestions(dbConn);
+                break;
+            case "3":
+                removeQuestion(dbConn);
                 break;
             case "q":
                 process.exit();
@@ -73,18 +76,37 @@ function addAnswer(db){
     });
 }
 
-var listQuestions= function(db){
+var editQuestions = function(db){
     //db.collection(myCollection).find({},{},{}).toArray(
     db.collection(myCollection).find({},{},{}).toArray(
     function(err, docs){
-        console.log("\nHere is the list: ");
-        var numQuestion = 1;
-        for(index in docs){
-            console.log(index + ". " + docs[index].question);
-        }
-        actionMenu(dbConn);
+        rl.question("Do you want to show the questions with the answers? [y] or [n]", function(answer){
+            console.log("\nHere is the list: ");
+            if (answer.toLocaleLowerCase() == "y"){
+                for(index in docs){
+                    console.log(index + ". " + docs[index]);
+                    actionMenu(dbConn);
+                }
+            }
+            else if (answer.toLowerCase() == "n"){
+                for(index in docs){
+                    console.log(index + ". " + docs[index].question);
+                    actionMenu(dbConn);
+                }
+            }
+            else {
+                console.log("Invalid input. Back to Menu");
+                actionMenu(dbConn);
+            }
+
+        });
+        //actionMenu(dbConn);
     }
     );
+}
+
+var removeQuestions = function(db){
+
 }
 
 MongoClient.connect(dbHost, function(err, db){

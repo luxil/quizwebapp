@@ -21,7 +21,7 @@ var actionMenu = function(db) {
                 addAnswer(dbConn);
                 break;
             case "2":
-                listQuestions(dbConn, false);
+                displayQuestions(dbConn, "list");
                 break;
             case "3":
                 editDeleteQuestions();
@@ -77,7 +77,8 @@ function addAnswer(db){
     });
 }
 
-var listQuestions = function(db, editTrue){
+//action sagt, ob du die Questions nur auflistet("list"), eine Question löscht("delete") oder eine Question bearbeitet"edit")
+var displayQuestions = function(db, action){
     db.collection(myCollection).find({},{},{}).toArray(
     function(err, docs){
         rl.question("Do you want to show the questions with the answers? [y] or [n]: ", function(answer){
@@ -93,57 +94,51 @@ var listQuestions = function(db, editTrue){
                 for(index in docs){console.log(index + ". " + docs[index].question);}
             }
             else {console.log("Invalid input. Back to Menu");}
-            if(!editTrue) {
-                actionMenu(dbConn);
-            }
+            if(action == "list") {actionMenu(dbConn);}
+            else if(action == "delete"){deleteQuestion(dbConn)}
+            else if(action == "edit"){}
         });
     }
     );
 };
 
 var editDeleteQuestions = function(db){
-    console.log("Do you want to edit the question? [y] or [n]: ");
-    rl.question('',function(answer){
-        switch(answer.toLowerCase()){
-            case 'y':
-                rl.question("Do you want to change[c] or delete[d] a question? ", function(answer2){
-                    switch(answer2.toLowerCase()){
-                        case 'c':
-                            changeQuestion();
-                            break;
-                        case 'd':
-                            listQuestions(dbConn, true);
-                            deleteQuestion();
-                            break;
-                        case 'q':
-                            actionMenu(dbConn);
-                            break;
-                        default:
-                            console.log("Invalid input. Back to Menu.");
-                            actionMenu(dbConn);
-                            break;
-                    }
-                })
+    rl.question("Do you want to change[c] or delete[d] a question? ", function(answer2){
+        switch(answer2.toLowerCase()){
+            case 'c':
+                //////////////changeQuestion();
+                break;
+            case 'd':
+                displayQuestions(dbConn, "delete");
+                break;
+            case 'q':
+                actionMenu(dbConn);
+                break;
+            default:
+                console.log("Invalid input. Back to Menu.");
+                actionMenu(dbConn);
                 break;
         }
     });
 }
 
-var deleteQuestion = function(db){
-    console.log("Which question do you want to delete? Enter the number: ");
-    listQuestions(dbConn, true);
-    rl.question('', function (answer) {
-        for (index in questions) {
-            if (index === answer) {
-                db.collection(myCollection).deleteOne(questions[index]);
-                console.log("Succesfully removed");
-            } else {
-                console.log("Error: There is no question for this number.");
-                actionMenu();
-            }
+var deleteQuestion = function(db){db.collection(myCollection).find({},{},{}).toArray(
+        function(err, questions) {
+            rl.question("Which question do you want to delete? Enter the number: ", function (answer) {
+                //console.log("---index: " + index + "---answer: " + answer);
+                for (index in questions) {
+                    console.log("---index: " + index + "---answer: " + answer);
+                    if (index === answer) {
+                        db.collection(myCollection).deleteOne(questions[index]);
+                        console.log("Succesfully removed");
+                    } else {
+                        console.log("Error: There is no question for this number.");
+                        actionMenu();
+                    }
+                }
+            });
         }
-    });
-}
+)};
 
 MongoClient.connect(dbHost, function(err, db){
     if ( err ) throw err;

@@ -13,7 +13,8 @@ var actionMenu = function(db) {
     console.log("\nWhat do you want to do?");
     console.log("[1] Add question");
     console.log("[2] Show questions");
-    console.log("[3] Delete or Edit question");
+    console.log("[3] Delete question");
+    console.log("[4] Edit question");
     console.log("[Q] Quit programm");
     rl.question("Enter a number or a letter: ", function(input){
         switch(input.toLowerCase()){
@@ -24,7 +25,10 @@ var actionMenu = function(db) {
                 displayQuestions(dbConn, "list");
                 break;
             case "3":
-                editDeleteQuestions();
+                displayQuestions(dbConn, "delete");
+                break;
+            case "4":
+                displayQuestions(dbConn, "edit");
                 break;
             case "q":
                 process.exit();
@@ -59,7 +63,6 @@ function addAnswer(db){
                                 'wroAns3': answer4
                             }, function(err, result) {
                                 assert.equal(err, null);
-                                console.log("Inserted a document into the restaurants collection.");
                                 callback(result);
                             });
                         }
@@ -67,8 +70,11 @@ function addAnswer(db){
                             assert.equal(null, err);
                             insertQuestion(db, function() {
                                 db.close();
+                                console.log("Succesfully added question");
+                                rl.question("Press [ENTER] to continue..", function(){
+                                    actionMenu(dbConn);
+                                });
                             });
-                            actionMenu(dbConn);
                         });
                     });
                 });
@@ -96,46 +102,57 @@ var displayQuestions = function(db, action){
             else {console.log("Invalid input. Back to Menu");}
             if(action == "list") {actionMenu(dbConn);}
             else if(action == "delete"){deleteQuestion(dbConn)}
-            else if(action == "edit"){}
+            else if(action == "edit"){editQuestion(dbConn)}
         });
     }
     );
 };
 
-var editDeleteQuestions = function(db){
-    rl.question("Do you want to change[c] or delete[d] a question? ", function(answer2){
-        switch(answer2.toLowerCase()){
-            case 'c':
-                //////////////changeQuestion();
-                break;
-            case 'd':
-                displayQuestions(dbConn, "delete");
-                break;
-            case 'q':
-                actionMenu(dbConn);
-                break;
-            default:
-                console.log("Invalid input. Back to Menu.");
-                actionMenu(dbConn);
-                break;
-        }
-    });
-}
+var editQuestion = function(db){db.collection(myCollection).find({},{},{}).toArray(
+    function(err, questions) {
+        rl.question("Which question do you want to edit? Enter the number: ", function (answer) {
+            for (index in questions) {
+                if (index === answer) {
+                    console.log("Question to edit: ");
+                    console.log(questions[index]);
+                    console.log("Succesfully edited");
+                    rl.question("Press [ENTER] to continue..", function(){
+                        actionMenu(dbConn);
+                    });
+                    break;
+                }
+            }
+            //Wenn der Index nicht gefunden wurde
+            console.log("Error: There is no question for this number.");
+            actionMenu();
+
+        });
+    }
+)};
 
 var deleteQuestion = function(db){db.collection(myCollection).find({},{},{}).toArray(
         function(err, questions) {
             rl.question("Which question do you want to delete? Enter the number: ", function (answer) {
-                //console.log("---index: " + index + "---answer: " + answer);
+                var notFoundQue = true;
                 for (index in questions) {
-                    console.log("---index: " + index + "---answer: " + answer);
                     if (index === answer) {
                         db.collection(myCollection).deleteOne(questions[index]);
                         console.log("Succesfully removed");
-                    } else {
-                        console.log("Error: There is no question for this number.");
-                        actionMenu();
+                        notFoundQue=false;
+                        rl.question("Press [ENTER] to continue..", function(){
+                            actionMenu(dbConn);
+                        });
                     }
+
                 }
+                //Wenn der Index nicht gefunden wurde
+                if(notFoundQue) {////////////
+                    console.log("Error: There is no question for this number.");
+                    console.log("Press [ENTER] to continue..");
+                    rl.on('line', function () {
+                        actionMenu(dbConn);
+                    });
+                }////////////////
             });
         }
 )};

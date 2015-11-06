@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html><head>
+<title>Bootstrap Resize Layout</title>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/client2.css" />
+<style>
+.container-fixed { /*border: 1px solid red;*/ }
+.col {
+  border: 1px solid #ccc;
+  text-align: center;
+}
+</style>
+</head><body>
+<div class="container-fixed">
+<div class="row row-xs-10">
+<!-- das mit der ID und css funkt noch nicht -->
+    <div class="col col-xs-6" id="A" style="background:#DFF0D8">
+     <a id ="a" href="#">A</a>
+    </div>
+    <div class="col col-xs-6" id="B" style="background:#D9EDF7">
+    <a id ="b" href="#">B</a>
+    </div>
+  </div>
+  
+   <div class="row row-xs-10">
+    <div class="col col-xs-6" style="background:#FCF8E3">
+    <a id ="c" href="#">C</a>
+    </div>
+    <div class="col col-xs-6" style="background:#F2DEDE">
+    <a id ="d" href="#">D</a>
+    </div>
+  </div>
+
+</div>
+</body></html>

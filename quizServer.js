@@ -1,8 +1,15 @@
 var io;
+var aktuelleFrage;
 
+exports.getFrage = function(){
+  return aktuelleFrage;
+};
 exports.init = function(fragen,nio){
   io = nio;
-  var aktuelleFrage;
+
+  this.getFrage = function(){
+    return aktuelleFrage;
+  };
   var timer = 15;
   // Fragen vorbereiten
 
@@ -34,11 +41,14 @@ exports.init = function(fragen,nio){
     io.sockets.emit('timerUpdate',counter);
   };
   function showQuestion(){
-    io.sockets.emit('questionUpdate',aktuelleFrage);
+    io.emit('questionUpdate',aktuelleFrage);
   };
   function showScore(){
     io.sockets.emit('updateScore');
   };
+  function getAnswer(){
+    io.sockets.emit('answerUpdate');
+  }
 
   console.log(Fragen);
 
@@ -61,13 +71,14 @@ exports.init = function(fragen,nio){
       console.log(counter);
       showTimer();
       console.log("Jetzt werden Antworten ausgewertet und Punkte vergeben.");
+      getAnswer();
       // Hier kommt ein Even um die aktuelle Antwort auszuwerten
       counter = timer;
       if (anzahl == 0){
         clearInterval(interval);
         console.log("Quiz beendet");
 
-        showScore();
+        //showScore();
         // Hier kommt ein Event um display auf scoreboard zu switchen
       }
     }else{

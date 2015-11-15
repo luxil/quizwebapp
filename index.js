@@ -21,6 +21,7 @@ app.get('/admin',function(req,res){
 });
 users = [];
 
+
 //addQuestion.addQuestions('karo?','linh','byron','max','moritz');
 
 io.on('connection', function(socket){
@@ -46,8 +47,22 @@ io.on('connection', function(socket){
     var user = findPlayerById(socket.id);
     user.score += parseInt(data);
     console.log(user.name + " hat einen Gesamtpunktestand von " + user.score);
+
+  });
+  socket.on('answer',function(data){
+    var aktuelleFrage = quizServer.getFrage();
+    var user = findPlayerById(socket.id);
+    console.log(user.name + " hat Antwort " + data + " genommen.");
+    if (aktuelleFrage[5] == aktuelleFrage[data]){
+      user.score += 100;
+      var score = user.score;
+      console.log(score);
+      io.to(socket.id).emit('updateScore',user.score);
+
+    }
   });
 });
+
 
 function findPlayerById(id){
   for(var i = 0; i < users.length;i++){

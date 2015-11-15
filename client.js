@@ -6,11 +6,10 @@ function client(){
        socket.emit('addPlayer',user);
     });
 
-    var currentRightAnswer;
+
     var currentPickedAnswer;
     var score = 0;
-    var currentData= [];
-    var start = false;
+
 
     var a = document.getElementById("a");
     var b = document.getElementById("b");
@@ -51,32 +50,15 @@ function client(){
         }
 
     }
-    function checkAnswer(){
-        if(currentData[currentPickedAnswer]==currentRightAnswer){
-            score += 100;
-            scoreLabel.innerHTML = "<h3>" + score + " Punkte </h3>";
 
-        }else{
-           // scoreLabel.innerHTML = score + " Punkte";
-        }
-    }
     socket.on('connect',function(){user;});
-    socket.on('questionUpdate',function(data){
-        // function to check last questions result and add points accordingly
-        if (start) {
-            checkAnswer();
-        }
-        start = true;
 
-
-        currentData = data;
-
-        currentRightAnswer = data[5];
-
-
+    socket.on('answerUpdate',function(){
+        socket.emit('answer',currentPickedAnswer);
     });
-    socket.on('updateScore',function(){
-        checkAnswer();
-        socket.emit('score',score);
+    socket.on('updateScore',function(data){
+
+        score = data;
+        scoreLabel.innerHTML = "<h3>" + score + " Punkte </h3>";
     });
 }

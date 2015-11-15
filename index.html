@@ -1,77 +1,44 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
-    <title>Socket.IO chat</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-      
-    p1 a{
-    background-color: #FF0000;
-    font-size: 30px;
-    color: #000000;
-    text-decoration: none;
-    }
-     p2 a{
-    background-color: #0000FF;
-    font-size: 30px;
-    color: #000000;
-    text-decoration: none;
-    }
-     p3 a{
-    background-color: #FFFF00;
-    font-size: 30px;
-    color: #000000;
-    text-decoration: none;
-    }
-     p4 a{
-    background-color: #00FF00;
-    font-size: 30px;
-    color: #000000;
-    text-decoration: none;
-    }
-    </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Spiel mit!</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
   </head>
   <body>
-    <ul id="messages"></ul>
-    
-<button id="button1" type="submit">A</button> 
-<button id="button2" type="submit">B</button>
-<button id="button3" type="submit">C</button> 
-<button id="button4" type="submit">D</button>
+      <nav class="navbar ">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 
-<p1><a href="#" onclick="ClickButton('A');return false">A</a></p1>
-<p2><a href="#" onclick="ClickButton('B');return false">B</a></p2>
-<p3><a href="#" onclick="ClickButton('C');return false">C</a></p3>
-<p4><a href="#" onclick="ClickButton('D');return false">D</a></p4>
+          </button>
+          <a class="navbar-brand" href="#">HAW QUIZ</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <!--<li class="active"><a href="#">Hilfe</a></li>
+            <li><a href="#about">Admin</a></li>-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+  <div class="jumbotron" style="text-align: center; height: 200px;">
+<h2> Willkommen beim Quiz. Triff bitte eine Auswahl: </h2>
+</div>
 
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-	<script>
-	  var socket = io();
-	  $('form').submit(function(){
-		socket.emit('chat message', $('#m').val());
-		$('#m').val('');
-		return false;
-	  });
-      function ClickButton(value){
-        socket.emit('chat message', value);
-        return false;
-      };
-	  // Message soll in dem Fenster nicht angezeigt werden
-	  /*socket.on('chat message', function(msg){
-		$('#messages').append($('<li>').text(msg));
-	  }); */
-	</script>
+    <h2 class="text-center"><a href="/controller">Mitspielen</a></h2>
+    <h2 class="text-center"><a href="/admin">Quiz erstellen</a></h2>
+    <h2 class="text-center"><a href="/display">Quiz Monitor</a></h2>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>

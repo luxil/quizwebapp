@@ -13,11 +13,11 @@
 
 /*.row-xs-12 { height: 100%; }
 .row-xs-11 { height: 91.66666666666666%; }*/
-.row-xs-10 { height:50%; }
+.row-xs-10 { height:40%; }
 /*.row-xs-9 { height: 75%; }
 .row-xs-8 { height: 66.66666666666666%; }
 .row-xs-7 { height: 58.333333333333336%; }*/
-.row-xs-6 { height: 25%; }
+.row-xs-6 { height: 20%; }
 /*.row-xs-5 { height: 41.66666666666667%;}
 .row-xs-4 { height: 33.33333333333333%;}
 .row-xs-3 { height: 25%; }
@@ -28,6 +28,16 @@
 background-color: #DFF0D8;
 }
 
+.user {
+
+    float:left;
+    padding: 10px;
+}
+.score {
+
+    float:right;
+    padding: 10px;
+}
 #a {
     color: black;
     display: block;

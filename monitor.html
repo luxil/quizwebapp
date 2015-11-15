@@ -9,9 +9,12 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="monitor.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 
   </head>
-  <body>
+  <body onload="monitor()">
       <nav class="navbar ">
       <div class="container">
         <div class="navbar-header">
@@ -30,26 +33,26 @@
     </nav>
   <div class="jumbotron" style="text-align: center; height: 200px;">
 
-    <h2>Wann wurde das Gebäude, in dem sich die HAW befindet, gebaut?
+    <h2><div id="question">Warte auf Start durch den Quizmaster!</div>
     <br /></h2>
     </div>
     
-    <div class="timer" style="text-align: center;">
-    <h3> 18 </h3>
+    <div class="timer" id="timer" style="text-align: center;">
+    <h3> Es geht gleich los :) </h3>
     </div>
   <br />
 
     <div class="row" style="text-align: center">
-  <div class="col-xs-6" style="background-color: #DFF0D8" ><h3>A. 1921</h3></div>
+  <div class="col-xs-6" style="background-color: #DFF0D8" ><h3>A.<div id="A"></div></h3></div>
   
    <!--<div class="alert alert-info" role="alert">-->
-  <div class="col-xs-6" style="background-color: #D9EDF7"><h3>B. 1950</h3></div>
+  <div class="col-xs-6" style="background-color: #D9EDF7"><h3>B.<div id="B"></div></h3></div>
 
 </div>
 
 <div class="row" style="text-align: center">
-  <div class="col-xs-6" style="background-color: #FCF8E3"><h3>C.1910</h3></div>
-  <div class="col-xs-6" style="background-color: #F2DEDE"><h3>D. 1914</h3></div>
+  <div class="col-xs-6" style="background-color: #FCF8E3"><h3>C.<div id="C"></div></h3></div>
+  <div class="col-xs-6" style="background-color: #F2DEDE"><h3>D.<div id="D"></div></h3></div>
 </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

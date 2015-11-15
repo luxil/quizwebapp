@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html><head>
-<title>Bootstrap Resize Layout</title>
+<head>
+<title>HAW Quiz - Controller</title>
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
 <link rel="stylesheet" href="css/client2.css" />
 <style>
@@ -10,14 +10,18 @@
   text-align: center;
 }
 </style>
-</head><body>
+    <script src="client.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</head><body onload="client()">
 <div class="container-fixed">
 <div class="row row-xs-10">
 <!-- das mit der ID und css funkt noch nicht -->
-    <div class="col col-xs-6" id="A" style="background:#DFF0D8">
+    <div class="col col-xs-6" style="background:#DFF0D8">
      <a id ="a" href="#">A</a>
     </div>
-    <div class="col col-xs-6" id="B" style="background:#D9EDF7">
+    <div class="col col-xs-6"  style="background:#D9EDF7">
     <a id ="b" href="#">B</a>
     </div>
   </div>
@@ -30,6 +34,10 @@
     <a id ="d" href="#">D</a>
     </div>
   </div>
-
+    <div class="container">
+    <div id="user" class="user"></div><div id="score" class="score"></div>
+    </div>
 </div>
+
+</body>
 </body></html>

@@ -1,16 +1,23 @@
+var catalogueMenu = require('./catalogueMenu.js');
+
 var readline = require('readline');
 var rl = readline.createInterface(process.stdin, process.stdout);
 var assert = require('assert');
 
 var MongoClient = require('mongodb').MongoClient;
 var dbHost = 'mongodb://localhost:27017/test';
-var questionCatalogue = "Fragen";
+var questionCatalog = 'questionCatalog';
 var dbConn;
 var tempQuestionID = 0;
+var tempCatName;
+var tempCatID;
 
+var actionMenu = function(db, catName, catId) {
+    tempCatID = catId;
+    tempCatName = catName;
 
-var actionMenu = function(db) {
-    console.log("\nWhat do you want to do?");
+    console.log("\nYou are in the questioncatalog with the name " + tempCatName);
+    console.log("What do you want to do?");
     console.log("[1] Add question");
     console.log("[2] Show questions");
     console.log("[3] Delete question");
@@ -21,7 +28,7 @@ var actionMenu = function(db) {
     rl.question("Enter a number or a letter: ", function(input){
         switch(input.toLowerCase()){
             case "1":
-                addQuestion(dbConn);
+                addQuestion(dbConn, tempCatName);
                 break;
             case "2":
                 displayQuestions(dbConn, "list");
@@ -33,27 +40,29 @@ var actionMenu = function(db) {
                 displayQuestions(dbConn, "edit");
                 break;
             case "5":
-                dbConn.collection(questionCatalogue).removeMany();
+                dbConn.collection(questionCatalog).removeMany();
                 console.log("BAM");
-                actionMenu(dbConn);
+                actionMenu(dbConn, tempCatName, tempCatID);
                 break;
             case "5":
                 /////////////////////////////////////Katalog
+                catalogueMenu.
                 break;
             case "q":
                 process.exit();
                 break;
             default :
                 console.log("Invalid input");
-                actionMenu();
+                actionMenu(dbConn, tempCatName, tempCatID);
                 break;
         }
     });
 }
+exports.actionMenu = actionMenu;
 
 
 function addQuestion(db){
-    db.collection(questionCatalogue).find({},{},{}).toArray(
+    db.collection(questionCatalog).find({},{},{}).toArray(
         function(err, docs){
             if(docs.length != 0)
             tempQuestionID = (docs[docs.length-1].questionID + 1);
@@ -67,13 +76,15 @@ function addQuestion(db){
                 rl.question("Wrong answer 2: " + "\n", function(answer3) {
                     rl.question("Wrong answer 3: " + "\n", function(answer4) {
                         var insertQuestion = function(db, callback){
-                            db.collection(questionCatalogue).insertOne({
+                            db.collection(questionCatalog).insertOne({
                                 'questionID': (tempQuestionID),
                                 'question': quest,
                                 'rigAns': answer1,
                                 'wroAns1': answer2,
                                 'wroAns2': answer3,
-                                'wroAns3': answer4
+                                'wroAns3': answer4,
+                                'catID': tempCatID,
+                                'catName': tempCatName
                             }, function(err, result) {
                                 assert.equal(err, null);
                                 callback(result);
@@ -86,7 +97,7 @@ function addQuestion(db){
                                 console.log("Succesfully added question");
                                 console.log("questionID of the new question: " + tempQuestionID);
                                 rl.question("Press [ENTER] to continue..", function(){
-                                    actionMenu(dbConn);
+                                    actionMenu(dbConn, tempCatName, tempCatID);
                                 });
                             });
                         });
@@ -99,7 +110,7 @@ function addQuestion(db){
 
 //action sagt, ob du die Questions nur auflistet("list"), eine Question löscht("delete") oder eine Question bearbeitet"edit")
 var displayQuestions = function(db, action){
-    db.collection(questionCatalogue).find({},{},{}).toArray(
+    db.collection(questionCatalog).find({},{},{}).toArray(
         function(err, docs){
             rl.question("Do you want to show the questions with the answers? [y] or [n]: ", function(answer){
                 console.log("\nHere is the list: ");
@@ -113,8 +124,8 @@ var displayQuestions = function(db, action){
                 else if (answer.toLowerCase() == "n"){
                     for(index in docs){console.log("[" + index + "]" + docs[index].question);}
                 }
-                else {console.log("Invalid input. Back to Menu"); actionMenu(dbConn);}
-                if(action == "list") {actionMenu(dbConn);}
+                else {console.log("Invalid input. Back to Menu"); actionMenu(dbConn, tempCatName, tempCatID);}
+                if(action == "list") {actionMenu(dbConn, tempCatName, tempCatID);}
                 else if(action == "delete"){deleteQuestion(dbConn)}
                 else if(action == "edit"){editQuestion(dbConn)}
             });
@@ -123,17 +134,17 @@ var displayQuestions = function(db, action){
 };
 
 
-var deleteQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).toArray(
+var deleteQuestion = function(db){db.collection(questionCatalog).find({},{},{}).toArray(
     function(err, questions) {
         rl.question("Which question do you want to delete? Enter the number: ", function (answer) {
             var notFoundQue = true;
             for (index in questions) {
                 if (index === answer) {
-                    db.collection(questionCatalogue).deleteOne(questions[index]);
+                    db.collection(questionCatalog).deleteOne(questions[index]);
                     console.log("Succesfully removed");
                     notFoundQue=false;
                     rl.question("Press [ENTER] to continue..", function(){
-                        actionMenu(dbConn);
+                        actionMenu(dbConn, tempCatName, tempCatID);
                     });
                 }
 
@@ -143,7 +154,7 @@ var deleteQuestion = function(db){db.collection(questionCatalogue).find({},{},{}
                 console.log("Error: There is no question for this number.");
                 console.log("Press [ENTER] to continue..");
                 rl.on('line', function () {
-                    actionMenu(dbConn);
+                    actionMenu(dbConn, tempCatName, tempCatID);
                 });
             }
         });
@@ -151,7 +162,7 @@ var deleteQuestion = function(db){db.collection(questionCatalogue).find({},{},{}
 )};
 
 
-var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).toArray(
+var editQuestion = function(db){db.collection(questionCatalog).find({},{},{}).toArray(
     function(err, questions) {
         rl.question("Which question do you want to edit? Enter the number: ", function (answer) {
             var notFoundQue = true;
@@ -169,7 +180,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                         switch (input) {
                             case '0':
                                 rl.question("Edit question:  ", function (newText) {
-                                    db.collection(questionCatalogue).updateOne(
+                                    db.collection(questionCatalog).updateOne(
                                         {questionID: questions[answer].questionID},
                                         {
                                             $set: {
@@ -183,7 +194,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                                 break;
                             case '1':
                                 rl.question("Edit right answer:  ", function (newText) {
-                                    db.collection(questionCatalogue).updateOne(
+                                    db.collection(questionCatalog).updateOne(
                                         {questionID: questions[answer].questionID},
                                         {
                                             $set: {
@@ -197,7 +208,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                                 break;
                             case '2':
                                 rl.question("Edit wrong answer 1:  ", function (newText) {
-                                    db.collection(questionCatalogue).updateOne(
+                                    db.collection(questionCatalog).updateOne(
                                         {questionID: questions[answer].questionID},
                                         {
                                             $set: {
@@ -211,7 +222,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                                 break;
                             case '3':
                                 rl.question("Edit wrong answer 2:  ", function (newText) {
-                                    db.collection(questionCatalogue).updateOne(
+                                    db.collection(questionCatalog).updateOne(
                                         {questionID: questions[answer].questionID},
                                         {
                                             $set: {
@@ -225,7 +236,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                                 break;
                             case '4':
                                 rl.question("Edit wrong answer 3:  ", function (newText) {
-                                    db.collection(questionCatalogue).updateOne(
+                                    db.collection(questionCatalog).updateOne(
                                         {questionID: questions[answer].questionID},
                                         {
                                             $set: {
@@ -239,7 +250,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                                 break;
                             default:
                                 console.log("Invalid input. Back to menu");
-                                actionMenu(dbConn);
+                                actionMenu(dbConn, tempCatName, tempCatID);
                         }
                     });
                     if (notFoundQue) {
@@ -252,7 +263,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
                 console.log("Error: There is no question for this number.");
                 console.log("Press [ENTER] to continue..");
                 rl.on('line', function () {
-                    actionMenu(dbConn);
+                    actionMenu(dbConn, tempCatName, tempCatID);
                 });
             }////////////////
         });
@@ -263,7 +274,7 @@ var editQuestion = function(db){db.collection(questionCatalogue).find({},{},{}).
 MongoClient.connect(dbHost, function(err, db){
     if ( err ) throw err;
     dbConn = db;
-    actionMenu();
+    //actionMenu(dbConn, tempCatName, tempCatID);//////////////
 });
 
 
@@ -274,7 +285,7 @@ var editQuestionHandler = function(err){
     var editAnotherQuestion = function () {
         rl.question('', function (again) {
             if (again === 'y') editQuestion(dbConn);
-            else if (again === 'n') actionMenu(dbConn);
+            else if (again === 'n') actionMenu(dbConn, tempCatName, tempCatID);
             else {console.log("Please enter [y] or [n]"); editAnotherQuestion();}
         });
     }
@@ -290,6 +301,4 @@ var catalogueMenu = function(db){
  *
  */
 
-module.exports = actionMenu;
-module.exports = dbConn;
 

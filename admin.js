@@ -19,11 +19,12 @@ var actionMenu = function(db, catName, catId) {
     console.log("\nYou are in the questioncatalog with the name " + tempCatName);
     console.log("What do you want to do?");
     console.log("[1] Add question");
-    console.log("[2] Show questions");
-    console.log("[3] Delete question");
-    console.log("[4] Edit question");
-    console.log("[5] Delete all questions in the catalogue");
-    console.log("[6] Change catalogue");
+    console.log("[2] Show questions from catalog " + tempCatName);
+    console.log("[3] Show questions from all catalogs");
+    console.log("[4] Delete question");
+    console.log("[5] Edit question");
+    console.log("[6] Delete all questions in the catalogue");
+    console.log("[7] Change catalogue");
     console.log("[Q] Quit programm");
     rl.question("Enter a number or a letter: ", function(input){
         switch(input.toLowerCase()){
@@ -31,23 +32,24 @@ var actionMenu = function(db, catName, catId) {
                 addQuestion(dbConn, tempCatName);
                 break;
             case "2":
-                displayQuestions(dbConn, "list");
+                displayQuestionsFromCat(dbConn, "list");
                 break;
             case "3":
-                displayQuestions(dbConn, "delete");
+                displayQuestions(dbConn, "list");
                 break;
             case "4":
-                displayQuestions(dbConn, "edit");
+                displayQuestionsFromCat(dbConn, "delete");
                 break;
             case "5":
+                displayQuestionsFromCat(dbConn, "edit");
+                break;
+            case "6":
                 dbConn.collection(questionCatalog).removeMany();
                 console.log("BAM");
                 actionMenu(dbConn, tempCatName, tempCatID);
                 break;
-            case "5":
-                /////////////////////////////////////Katalog
-                catalogueMenu.
-                break;
+            case "7":
+                catalogueMenu.catMenu(dbConn);
             case "q":
                 process.exit();
                 break;
@@ -132,9 +134,32 @@ var displayQuestions = function(db, action){
         }
     );
 };
+var displayQuestionsFromCat = function(db, action){
+    db.collection(questionCatalog).find({catID: tempCatID}).toArray(
+        function(err, docs){
+            rl.question("Do you want to show the questions with the answers? [y] or [n]: ", function(answer){
+                console.log("\nHere is the list: ");
+                if (answer.toLocaleLowerCase() == "y"){
+                    for(index in docs){
+                        console.log("[" + index + "]");
+                        console.log(docs[index]);
+                        console.log("\n");
+                    }
+                }
+                else if (answer.toLowerCase() == "n"){
+                    for(index in docs){console.log("[" + index + "]" + docs[index].question);}
+                }
+                else {console.log("Invalid input. Back to Menu"); actionMenu(dbConn, tempCatName, tempCatID);}
+                if(action == "list") {actionMenu(dbConn, tempCatName, tempCatID);}
+                else if(action == "delete"){deleteQuestion(dbConn)}
+                else if(action == "edit"){editQuestion(dbConn)}
+            });
+        }
+    );
+};
 
 
-var deleteQuestion = function(db){db.collection(questionCatalog).find({},{},{}).toArray(
+var deleteQuestion = function(db){db.collection(questionCatalog).find({catID: tempCatID}).toArray(
     function(err, questions) {
         rl.question("Which question do you want to delete? Enter the number: ", function (answer) {
             var notFoundQue = true;
@@ -162,7 +187,7 @@ var deleteQuestion = function(db){db.collection(questionCatalog).find({},{},{}).
 )};
 
 
-var editQuestion = function(db){db.collection(questionCatalog).find({},{},{}).toArray(
+var editQuestion = function(db){db.collection(questionCatalog).find({catID: tempCatID}).toArray(
     function(err, questions) {
         rl.question("Which question do you want to edit? Enter the number: ", function (answer) {
             var notFoundQue = true;

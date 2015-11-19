@@ -12,7 +12,7 @@ var tempCatName = 'Default/';
 var dbConn;
 var tempCatID = 0;
 
-exports.catMenu = function (db) {
+var catMenu = function (db) {
     console.log("\nWhat do you want to do?");
     console.log("[1] Create new catalog");
     console.log("[2] Change to an existing catalog");
@@ -28,6 +28,7 @@ exports.catMenu = function (db) {
         }
     });
 }
+exports.catMenu = catMenu;
 
 
 var createCat = function(db){
@@ -86,7 +87,7 @@ var listCats = function(db) {
 MongoClient.connect(dbHost, function(err, db){
     if ( err ) throw err;
     dbConn = db;
-    catalogueMenu.catMenu(dbConn);
+    catMenu(dbConn);
 });
 
 /*

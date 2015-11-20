@@ -1,2 +1,5 @@
 var catalogueMenu = require('./catalogueMenu.js');
-catalogueMenu.catMenu();
+
+module.exports = function(){
+    catalogueMenu.catMenu();
+}

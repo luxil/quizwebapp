@@ -50,6 +50,7 @@ var actionMenu = function(db, catName, catId) {
                 break;
             case "7":
                 catalogueMenu.catMenu(dbConn);
+                break;
             case "q":
                 process.exit();
                 break;
@@ -122,9 +123,17 @@ var displayQuestions = function(db, action){
                         console.log(docs[index]);
                         console.log("\n");
                     }
+                    console.log("Press [ENTER] to continue..");
+                    rl.on('line', function () {
+                        actionMenu(dbConn, tempCatName, tempCatID);
+                    });
                 }
                 else if (answer.toLowerCase() == "n"){
                     for(index in docs){console.log("[" + index + "]" + docs[index].question);}
+                    console.log("Press [ENTER] to continue..");
+                    rl.on('line', function () {
+                        actionMenu(dbConn, tempCatName, tempCatID);
+                    });
                 }
                 else {console.log("Invalid input. Back to Menu"); actionMenu(dbConn, tempCatName, tempCatID);}
                 if(action == "list") {actionMenu(dbConn, tempCatName, tempCatID);}
@@ -145,9 +154,17 @@ var displayQuestionsFromCat = function(db, action){
                         console.log(docs[index]);
                         console.log("\n");
                     }
+                    console.log("Press [ENTER] to continue..");
+                    rl.on('line', function () {
+                        actionMenu(dbConn, tempCatName, tempCatID);
+                    });
                 }
                 else if (answer.toLowerCase() == "n"){
                     for(index in docs){console.log("[" + index + "]" + docs[index].question);}
+                    console.log("Press [ENTER] to continue..");
+                    rl.on('line', function () {
+                        actionMenu(dbConn, tempCatName, tempCatID);
+                    });
                 }
                 else {console.log("Invalid input. Back to Menu"); actionMenu(dbConn, tempCatName, tempCatID);}
                 if(action == "list") {actionMenu(dbConn, tempCatName, tempCatID);}
@@ -317,9 +334,6 @@ var editQuestionHandler = function(err){
     editAnotherQuestion();
 }
 
-var catalogueMenu = function(db){
-
-}
 /**
  * To do
  * -mehrere Fragenkataloge können erstellt werden

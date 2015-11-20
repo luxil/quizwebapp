@@ -10,5 +10,5 @@ var dbConn;
 MongoClient.connect(dbHost, function(err, db){
     if ( err ) throw err;
     dbConn = db;
-    catalogueMenu.catMenu();
+    catalogueMenu.catMenu(dbConn);
 });

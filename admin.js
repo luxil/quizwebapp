@@ -1,4 +1,5 @@
 var catalogueMenu = require('./catalogueMenu.js');
+var questionPicker = require('./questionPicker.js');
 
 var readline = require('readline');
 var rl = readline.createInterface(process.stdin, process.stdout);
@@ -25,6 +26,7 @@ var actionMenu = function(db, catName, catId) {
     console.log("[5] Edit question");
     console.log("[6] Delete all questions in the catalogue");
     console.log("[7] Change catalogue");
+    console.log("[8] Pick questions");
     console.log("[Q] Quit programm");
     rl.question("Enter a number or a letter: ", function(input){
         switch(input.toLowerCase()){
@@ -50,6 +52,9 @@ var actionMenu = function(db, catName, catId) {
                 break;
             case "7":
                 catalogueMenu.catMenu(dbConn);
+                break;
+            case "8":
+                questionPicker.pickQuestions(tempCatID, dbConn);
                 break;
             case "q":
                 process.exit();

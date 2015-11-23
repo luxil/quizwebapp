@@ -1,10 +1,8 @@
 var admin = require('./admin.js');
-var test = require('./test.js');
-var catalogueMenu = require('./catalogueMenu.js');
 
 var readline = require('readline');
 var rl = readline.createInterface({input: process.stdin, output: process.stdout, terminal: false});
-var assert = require('assert');
+//var assert = require('assert');
 
 var MongoClient = require('mongodb').MongoClient;
 var dbHost = 'mongodb://localhost:27017/test';

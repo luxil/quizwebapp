@@ -19,11 +19,11 @@ var actionMenu = function(db, catName, catId) {
 
     console.log("\nYou are in the questioncatalog with the name " + tempCatName);
     console.log("What do you want to do?");
-    console.log("[1] Add question");
-    console.log("[2] Show questions from catalog " + tempCatName);
+    console.log("[1] Add question to the catalog : " + tempCatName);
+    console.log("[2] Show questions from catalog: " + tempCatName);
     console.log("[3] Show questions from all catalogs");
-    console.log("[4] Delete question");
-    console.log("[5] Edit question");
+    console.log("[4] Delete question from catalog");
+    console.log("[5] Edit question from catalog");
     console.log("[6] Delete all questions in the catalogue");
     console.log("[7] Change catalogue");
     console.log("[8] Pick questions");

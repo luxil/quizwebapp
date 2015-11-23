@@ -15,7 +15,6 @@ var catMenu = function (db) {
     console.log("\nWhat do you want to do?");
     console.log("[1] Create new catalog");
     console.log("[2] Change to an existing catalog");
-    console.log("[3] Delete an existing catalog");
     rl.question("Enter a number: ", function(input) {
         console.log("input: " + input );
         switch (input.toLowerCase()) {
@@ -86,8 +85,8 @@ var listCats = function(db) {
 
 
             } else{
-                console.log("Keine Kategorien vorhanden.");
-                rl.question("Zurück mit [Enter]..", function (input) {
+                console.log("No categories avaiable. First create one. ");
+                rl.question("Back with [Enter]..", function (input) {
                     catMenu(dbConn)
                 });
             }

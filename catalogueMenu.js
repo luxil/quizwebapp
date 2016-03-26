@@ -65,7 +65,6 @@ var createCat = function(db){
     );
 }
 
-
 var listCats = function(db) {
     var cursor = db.collection(questionCatalog).find({}, {}, {});
     cursor.toArray(

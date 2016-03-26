@@ -116,7 +116,7 @@ function addQuestion(db){
     });
 }
 
-//action sagt, ob du die Questions nur auflistet("list"), eine Question löscht("delete") oder eine Question bearbeitet"edit")
+//action sagt, ob du die Questions nur auflistet("list"), eine Question löscht("delete") oder eine Question bearbeitest"edit")
 var displayQuestions = function(db, action){
     db.collection(questionCatalog).find({},{},{}).toArray(
         function(err, docs){

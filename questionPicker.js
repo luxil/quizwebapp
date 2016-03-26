@@ -25,8 +25,7 @@ var pickQuestions = function(tempCatID, db){
                 if (quantity>docs.length){
                     console.log("Nicht genügend Fragen vorhanden. Gib eine kleine Zahl als " + docs.length + " ein." );
                     pickQuestions(tempCatID, dbConn);
-                }
-                else  quantityOk = true;
+                }   else  quantityOk = true;
 
                 if (quantityOk) {
                     //QIDs aller zum Katalog gehörenden Fragen
@@ -46,9 +45,7 @@ var pickQuestions = function(tempCatID, db){
                     }
                 }
             })
-
         }
-
     );
 }
 exports.pickQuestions= pickQuestions;

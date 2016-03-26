@@ -9,14 +9,14 @@ var fragenSimulator = require('./dbrandomsimulator');
 
 app.use('/', express.static(__dirname,'/'));
 
-app.get('/display', function(req, res){
+app.get('/monitor', function(req, res){
     res.sendFile(path.join(__dirname,'/monitor.html'));
 });
-app.get('/controller', function(req, res){
+app.get('/client2', function(req, res){
 
   res.sendFile(__dirname + '/client2.html');
 });
-app.get('/admin',function(req,res){
+app.get('/quizmaster',function(req,res){
   res.sendFile(__dirname + '/quizmaster.html');
 });
 users = [];

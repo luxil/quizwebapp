@@ -29,25 +29,39 @@ function client(){
     d.addEventListener("click",changeAnswer);
 
     function changeAnswer(event){
+        resetAnswer();
         var source = event.srcElement;
         switch (source){
             case a:
                 currentPickedAnswer = 1;
+                a.style.backgroundColor = "black" ;
                 console.log("a");
                 break;
             case b:
                 currentPickedAnswer = 2;
+                b.style.backgroundColor = "black" ;
                 console.log("b");
                 break;
             case c:
                 currentPickedAnswer = 3;
+                c.style.backgroundColor = "black";
                 console.log("c");
                 break;
             case d:
                 currentPickedAnswer = 4;
+                d.style.backgroundColor = "black";
                 console.log("d");
                 break;
         }
+
+    }
+
+    function resetAnswer(){
+        currentPickedAnswer = null;
+        a.style.backgroundColor = "#DFF0D8";
+        b.style.backgroundColor = "#D9EDF7";
+        c.style.backgroundColor = "#FCF8E3";
+        d.style.backgroundColor = "#F2DEDE";
 
     }
 
@@ -55,6 +69,7 @@ function client(){
 
     socket.on('answerUpdate',function(){
         socket.emit('answer',currentPickedAnswer);
+        resetAnswer();
     });
     socket.on('updateScore',function(data){
 

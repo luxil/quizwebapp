@@ -17,7 +17,7 @@ function client(){
     var d = document.getElementById("d");
 
     var userLabel = document.getElementById("user");
-    var h3 = document.createElement("h3");
+    var h3 = document.createElement("h2");
     h3.innerHTML = user;
     userLabel.appendChild(h3);
 
@@ -34,22 +34,22 @@ function client(){
         switch (source){
             case a:
                 currentPickedAnswer = 1;
-                a.style.backgroundColor = "black" ;
+                a.style.backgroundColor = "#5bb235" ;
                 console.log("a");
                 break;
             case b:
                 currentPickedAnswer = 2;
-                b.style.backgroundColor = "black" ;
+                b.style.backgroundColor = "#358ab2" ;
                 console.log("b");
                 break;
             case c:
                 currentPickedAnswer = 3;
-                c.style.backgroundColor = "black";
+                c.style.backgroundColor = "#b29d35";
                 console.log("c");
                 break;
             case d:
                 currentPickedAnswer = 4;
-                d.style.backgroundColor = "black";
+                d.style.backgroundColor = "#b23535";
                 console.log("d");
                 break;
         }
@@ -74,6 +74,6 @@ function client(){
     socket.on('updateScore',function(data){
 
         score = data;
-        scoreLabel.innerHTML = "<h3>" + score + " Punkte </h3>";
+        scoreLabel.innerHTML = "<h2>" + score + " Punkte </h2> ";
     });
 }

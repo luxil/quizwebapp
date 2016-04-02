@@ -16,14 +16,42 @@ exports.init = function(fragen,nio){
 
   var Fragen = [];
 
-  var sammlung = fragen.toString().split(",");
-  var anzahl = sammlung.length / 5;
+ // var sammlung = fragen.toString().split(",");
 
+  var anzahl = fragen.length;
+  console.log(anzahl);
+  console.log(fragen);
+
+  for ( var i = 0 ; i < anzahl; i++){
+    var frage=[];
+    var random= [];
+
+    frage.push(fragen[i][1]);
+
+    random.push(fragen[i][2],fragen[i][3],fragen[i][4],fragen[i][5]);
+
+    shuffle(random);
+    for (var k = 0;k<4;k++){
+      frage[k+1]=random[k];
+    }
+    
+
+
+    frage.push(fragen[i][2]);
+
+    console.log(frage);
+
+
+
+    Fragen.push(frage);
+    console.log(Fragen);
+  }
+/*
   for ( var i = 0;i < anzahl; i++){
     var frage=[];
     var random=[];
     for (var j = 0;j < 5;j++){
-      frage.push(sammlung.shift());
+      frage.push(fragen.shift());
     }
     //Letztes Element ist die richtige Antwort
     frage.push(frage[1]);
@@ -36,7 +64,7 @@ exports.init = function(fragen,nio){
     }
     Fragen.push(frage);
   }
-
+*/
   // Timer Funktionalit�t
   function showTimer(){
     io.sockets.emit('timerUpdate',counter);

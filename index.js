@@ -52,7 +52,7 @@ io.on('connection', function(socket){
     console.log(fragen);
     console.log("anzahl der Fragen: " + data.anzahl);
     //var fragen = fragenSimulator.gibMirFragen(data);
-    //quizServer.init(fragen,io);
+    quizServer.init(fragen,io);
   });
   socket.on('score',function(data){
     var user = findPlayerById(socket.id);

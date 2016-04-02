@@ -44,7 +44,7 @@ function client(){
                 break;
             case c:
                 currentPickedAnswer = 3;
-                c.style.backgroundColor = "#b29d35";
+                c.style.backgroundColor = "#e5c844";
                 console.log("c");
                 break;
             case d:

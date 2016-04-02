@@ -2,10 +2,13 @@ var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+exports.io = io;
 var path = require('path');
-var addQuestion = require('./mongo');
+//var addQuestion = require('./mongo');
+var displayAllQuestions = require('./datenbankfiles/displayAllQuestions');
 var quizServer = require('./quizServer');
 var fragenSimulator = require('./dbrandomsimulator');
+var fragen;
 
 app.use('/', express.static(__dirname,'/'));
 
@@ -19,6 +22,10 @@ app.get('/client2', function(req, res){
 app.get('/quizmaster',function(req,res){
   res.sendFile(__dirname + '/quizmaster.html');
 });
+app.get('/success',function(req,res){
+  res.sendFile(__dirname + '/success.html');
+});
+
 users = [];
 
 
@@ -39,8 +46,12 @@ io.on('connection', function(socket){
     console.log('message: ' + msg);
 	io.emit('chat message', msg);
   });
-  socket.on('startQuiz',function(data){
-    var fragen = fragenSimulator.gibMirFragen(data);
+  socket.on('startQuiz in index',function(data){
+    fragen = data.allQuestions;
+    console.log("startquiz");
+    console.log(fragen);
+    console.log("anzahl der Fragen: " + data.anzahl);
+    //var fragen = fragenSimulator.gibMirFragen(data);
     quizServer.init(fragen,io);
   });
   socket.on('score',function(data){
@@ -61,6 +72,12 @@ io.on('connection', function(socket){
 
     }
   });
+
+  socket.on('getList', function(data,callback){
+    //console.log("hier kam was");
+    var data = getScoreList();
+    callback(data);
+  });
 });
 
 
@@ -70,6 +87,18 @@ function findPlayerById(id){
       return users[i];
     }
   }
+};
+
+function getScoreList(){
+  //console.log("scorelistenanfrage");
+  var currentScores = [];
+  for(var i = 0; i < users.length;i++){
+    if(users[i].name != "noUser"){
+      var data = [users[i].name,users[i].score];
+      currentScores.push(data);
+    }
+  }
+  return currentScores;
 };
 
 

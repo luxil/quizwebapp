@@ -90,6 +90,7 @@ exports.init = function(fragen,nio){
 
   var counter = timer;
   var counter2 = timer2;
+  var counter3 = 0;
   function logic(){
 
     if (counter == timer && pause == false){
@@ -108,13 +109,19 @@ exports.init = function(fragen,nio){
       // Hier kommt ein Event um die aktuelle Antwort auszuwerten
       pause = true;
       console.log("pause wurde true.");
-      counter = timer;
+
       if (anzahl == 0){
+
+        counter3++;
+        if(counter3 == 2){
         clearInterval(interval);
         console.log("Quiz beendet");
 
         showScore();
+        }
 
+      }else{
+      counter = timer;
       }
     }else if(pause == false){
       console.log(counter);

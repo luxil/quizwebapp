@@ -6,6 +6,7 @@ function score(){
 
     socket.emit('getList','getListSuccess',function(data){
         console.log("daten kamen" + data);
+        //hier müsste eine sortierte liste kommen --- to do
         data.forEach(createListItem);
     })
 
@@ -23,8 +24,9 @@ function score(){
         scoreItem.className = "badge";
         scoreItem.innerHTML = data[1];
 
+        listItem.appendChild(scoreItem);
         liste.appendChild(listItem);
-        liste.appendChild(scoreItem);
+
         counter ++;
     };
 

@@ -49,23 +49,23 @@ function monitor(){
             console.log("antwort korrekt uebermittelt");
         }
         if(A.innerHTML == answer){
-            mA.className += "blinkA";
+            mA.className += " blinkA";
 
 
         }else if (B.innerHTML == answer){
-            mB.className += "blinkB";
+            mB.className += " blinkB";
 
 
            // A.innerHTML = " ";
            // C.innerHTML = " ";
            // D.innerHTML = " ";
         }else if (C.innerHTML == answer){
-            mC.className += "blinkC";
+            mC.className += " blinkC";
             //A.innerHTML = " ";
             //B.innerHTML = " ";
             //D.innerHTML = " ";
         }else if (D.innerHTML == answer) {
-            mD.className += "blinkD";
+            mD.className += " blinkD";
             //A.innerHTML = " ";
             //B.innerHTML = " ";
             //C.innerHTML = " ";

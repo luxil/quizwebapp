@@ -17,21 +17,61 @@
 }
 */
 
-@keyframes blink {  
+@keyframes blinkA {  
     0% { background-color: #DFF0D8; }
     100% { background-color: #5bb235; }
 }
-@-webkit-keyframes blink {
+@-webkit-keyframes blinkA {
     0% { background-color: #DFF0D8; }
     100% { background-color: #5bb235; }
 }
-.blink {
-    -webkit-animation: blink 1s linear infinite;
-    animation: blink 1s linear infinite;
+.blinkA {
+    -webkit-animation: blinkA 1s linear infinite;
+    animation: blinkA 1s linear infinite;
     animation-iteration-count: 3;
 } 
 
+@keyframes blinkB {  
+    0% { background-color: #D9EDF7; }
+    100% { background-color: #358ab2; }
+}
+@-webkit-keyframes blinkB {
+    0% { background-color: #D9EDF7; }
+    100% { background-color: #358ab2; }
+}
+.blinkB {
+    -webkit-animation: blinkB 1s linear infinite;
+    animation: blinkB 1s linear infinite;
+    animation-iteration-count: 3;
+} 
 
+@keyframes blinkC {  
+    0% { background-color: #FCF8E3; }
+    100% { background-color: #e5c844; }
+}
+@-webkit-keyframes blinkC {
+    0% { background-color: #FCF8E3; }
+    100% { background-color: #e5c844; }
+}
+.blinkC {
+    -webkit-animation: blinkC 1s linear infinite;
+    animation: blinkC 1s linear infinite;
+    animation-iteration-count: 3;
+} 
+
+@keyframes blinkD {  
+    0% { background-color: #FCF8E3; }
+    100% { background-color: #b23535; }
+}
+@-webkit-keyframes blinkD {
+    0% { background-color: #FCF8E3; }
+    100% { background-color: #b23535; }
+}
+.blinkD {
+    -webkit-animation: blinkD 1s linear infinite;
+    animation: blinkD 1s linear infinite;
+    animation-iteration-count: 3;
+} 
 /*@keyframes blink { 50% { background-color: #ff0000; }  }
 blink{ 
 	color: #ff0000 ;

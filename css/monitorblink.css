@@ -28,6 +28,7 @@
 .blink {
     -webkit-animation: blink 1s linear infinite;
     animation: blink 1s linear infinite;
+    animation-iteration-count: 3;
 } 
 
 

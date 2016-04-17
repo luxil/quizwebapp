@@ -1,0 +1,40 @@
+/*@keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+}
+@-webkit-keyframes blink {
+  50% {
+    opacity: 0.5;
+  }
+  
+}
+
+
+.blink {
+  animation: blink 1s step-start 0s infinite;
+  -webkit-animation: blink 1s step-start 0s infinite;
+}
+*/
+
+@keyframes blink {  
+    0% { background-color: #DFF0D8; }
+    100% { background-color: #5bb235; }
+}
+@-webkit-keyframes blink {
+    0% { background-color: #DFF0D8; }
+    100% { background-color: #5bb235; }
+}
+.blink {
+    -webkit-animation: blink 1s linear infinite;
+    animation: blink 1s linear infinite;
+} 
+
+
+/*@keyframes blink { 50% { background-color: #ff0000; }  }
+blink{ 
+	color: #ff0000 ;
+	background-color: #000000 ;	
+	animation: blink .5s step-end infinite alternate; 
+}
+*/

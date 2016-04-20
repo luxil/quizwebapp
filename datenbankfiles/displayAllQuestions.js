@@ -6,7 +6,7 @@ var index = require('../index');
 var io = index.io;
 
 io.on('connection', function(socket) {
-    socket.on('getQuestions', function (anzahl) {
+    socket.on('getQuestions', function (anzahl,room) {
         var allQuestions;
         allQuestions = [];
         var questionProcessed = 0;
@@ -20,7 +20,7 @@ io.on('connection', function(socket) {
                     questionProcessed++;
                     if (questionProcessed === docs.length) {
                         //console.log('allQuestion in disyplay: ' + allQuestions);
-                        socket.emit('startQuiz', {anzahl: anzahl, allQuestions: allQuestions});
+                        socket.emit('startQuiz', {anzahl: anzahl,raum:room, allQuestions: allQuestions});
                     }
                 }
             }

@@ -8,6 +8,9 @@ function quiz (){
 
     goButton.addEventListener("click",startQuiz);
     connect.addEventListener("click",initialize);
+    socket.on('test',function(){
+       console.log("Connection established");
+    });
 
     function initialize(){
         if(id.value != null || id.value != "undefined"){
@@ -21,7 +24,7 @@ function quiz (){
         console.log(anzahl);
         if (parseInt(anzahl)< 9) {
             //socket.emit('startQuiz', anzahl);
-            socket.emit('getQuestions', anzahl);
+            socket.emit('getQuestions', anzahl,id.value);
             socket.on('startQuiz', function(data){
                 socket.emit('startQuiz in index', data);
             });

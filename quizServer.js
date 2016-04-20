@@ -1,11 +1,13 @@
-var io;
+//var io;
 var aktuelleFrage;
 
 exports.getFrage = function(){
   return aktuelleFrage;
 };
-exports.init = function(fragen,nio){
-  io = nio;
+exports.init = function(fragen,room,io){
+ // io = nio;
+  var raum = room;
+
 
   this.getFrage = function(){
     return aktuelleFrage;
@@ -19,8 +21,8 @@ exports.init = function(fragen,nio){
  // var sammlung = fragen.toString().split(",");
 
   var anzahl = fragen.length;
-  console.log(anzahl);
-  console.log(fragen);
+  //console.log(anzahl);
+  //console.log(fragen);
 
   for ( var i = 0 ; i < anzahl; i++){
     var frage=[];
@@ -39,47 +41,28 @@ exports.init = function(fragen,nio){
 
     frage.push(fragen[i][2]);
 
-    console.log(frage);
+    //console.log(frage);
 
 
 
     Fragen.push(frage);
-    console.log(Fragen);
+   // console.log(Fragen);
   }
-/*
-  for ( var i = 0;i < anzahl; i++){
-    var frage=[];
-    var random=[];
-    for (var j = 0;j < 5;j++){
-      frage.push(fragen.shift());
-    }
-    //Letztes Element ist die richtige Antwort
-    frage.push(frage[1]);
 
-    //Shuffle der Antwortm�glichkeiten
-    random.push(frage[1],frage[2],frage[3],frage[4]);
-    shuffle(random);
-    for (var k = 0;k<4;k++){
-      frage[k+1]=random[k];
-    }
-    Fragen.push(frage);
-  }
-*/
-  // Timer Funktionalit�t
   function showTimer(){
-    io.sockets.emit('timerUpdate',counter);
+    io.sockets.in(raum).emit('timerUpdate',counter);
   };
   function showQuestion(){
-    io.emit('questionUpdate',aktuelleFrage);
+    io.sockets.in(raum).emit('questionUpdate',aktuelleFrage);
   };
   function showScore(){
-    io.sockets.emit('updateScore');
+    io.sockets.in(raum).emit('updateScore');
   };
   function getAnswer(){
-    io.sockets.emit('answerUpdate');
+    io.sockets.in(raum).emit('answerUpdate');
   }
   function showAnswer(){
-    io.sockets.emit('answerShow',aktuelleFrage[5]);
+    io.sockets.in(raum).emit('answerShow',aktuelleFrage[5]);
   }
 
   console.log(Fragen);

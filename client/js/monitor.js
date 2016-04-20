@@ -11,6 +11,7 @@ function monitor(){
     var mB = document.getElementById("mB");
     var mC = document.getElementById("mC");
     var mD = document.getElementById("mD");
+    var id = document.getElementById("id");
 
     var test;
 
@@ -32,6 +33,9 @@ function monitor(){
         test = data[5];
 
     });
+    socket.on('test',function(){
+       console.log("Connection established");
+    });
 
     socket.on('updateScore',function(){
         window.location.replace("/success");
@@ -41,6 +45,8 @@ function monitor(){
         checkAnswer(data);
         console.log("answer SHow aufgerufen");
     });
+    var nr = parseInt(id.innerHTML);
+    socket.emit('initialize',nr);
 
 
 

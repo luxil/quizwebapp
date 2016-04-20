@@ -1,12 +1,14 @@
 function client(){
     var user = prompt("Bitte gib deinen Usernamen ein:");
+    var raum = document.getElementById("raum");
+    var nr = parseInt(raum.innerHTML);
     var socket = io();
 
     socket.on('connect',function(){
-       socket.emit('addPlayer',user);
+        var data=[user,nr];
+        console.log(data);
+       socket.emit('addPlayer',data);
     });
-
-
     var currentPickedAnswer;
     var score = 0;
 
@@ -65,7 +67,7 @@ function client(){
 
     }
 
-    socket.on('connect',function(){user;});
+
 
     socket.on('answerUpdate',function(){
         socket.emit('answer',currentPickedAnswer);

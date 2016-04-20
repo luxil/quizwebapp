@@ -20,71 +20,85 @@ app.set('views', path.join(__dirname,'views'));
 
 app.use(express.static(path.resolve(__dirname, 'client')));
 
+app.get('/',function(req,res){
+   res.render('index');
+});
+
 app.get('/monitor', function(req, res){
-    res.render('./monitor');
+    res.render('monitor');
 });
 app.get('/client2', function(req, res){
-    res.render('./client2');
+    res.render('client2');
 });
 app.get('/quizmaster',function(req,res){
-    res.render('./quizmaster');
+    res.render('quizmaster');
 });
 app.get('/success',function(req,res){
-    res.render('./success');
+    res.render('success');
 });
 
 users = [];
+rooms = [];
+roomOwner = {};
 
 
-//addQuestion.addQuestions('karo?','linh','byron','max','moritz');
 
 io.on('connection', function(socket){
-  socket.on('addPlayer',function(data){
-  var user = {socket:socket,id:socket.id,score:0,name:data || "noUser"};
-  users.push(user);
-  console.log(user.name + ' connected with socketID: ' + user.id);
-  });
-  socket.on('disconnect', function(){
-   // var user = users[socket.id];
-    delete users[socket.id];
-    console.log(' disconnected with socketID: ' + socket.id);
-  });
-  socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
-	io.emit('chat message', msg);
-  });
-  socket.on('startQuiz in index',function(data){
-    fragen = data.allQuestions;
-    console.log("startquiz");
-    console.log(fragen);
-    console.log("anzahl der Fragen: " + data.anzahl);
-    //var fragen = fragenSimulator.gibMirFragen(data);
-    quizServer.init(fragen,io);
-  });
-  socket.on('score',function(data){
-    var user = findPlayerById(socket.id);
-    user.score += parseInt(data);
-    console.log(user.name + " hat einen Gesamtpunktestand von " + user.score);
+    socket.on('ready',function(){
+        var random = Math.floor(Math.random()*10000);
+        while(rooms.indexOf(random)>-1){
+            random = Math.floor(Math.random()*10000);
+        }
+        rooms.push(random);
+        roomOwner[socket.id]=random;
+        socket.emit('id',random);
+    });
+    socket.on('initialize',function(data){
+        socket.join(data);
+    });
 
-  });
-  socket.on('answer',function(data){
-    var aktuelleFrage = quizServer.getFrage();
-    var user = findPlayerById(socket.id);
-    console.log(user.name + " hat Antwort " + data + " genommen.");
-    if (aktuelleFrage[5] == aktuelleFrage[data]){
-      user.score += 100;
-      var score = user.score;
-      console.log(score);
-      io.to(socket.id).emit('updateScore',user.score);
+    socket.on('addPlayer',function(data){
+      var user = {socket:socket,id:socket.id,score:0,name:data || "noUser"};
+      users.push(user);
+      console.log(user.name + ' connected with socketID: ' + user.id);
+      });
+    socket.on('disconnect', function(){
+       // var user = users[socket.id];
+        delete users[socket.id];
+        console.log(' disconnected with socketID: ' + socket.id);
+      });
+      socket.on('startQuiz in index',function(data){
+        fragen = data.allQuestions;
+        console.log("startquiz");
+        console.log(fragen);
+        console.log("anzahl der Fragen: " + data.anzahl);
+        //var fragen = fragenSimulator.gibMirFragen(data);
+        quizServer.init(fragen,io);
+      });
+      socket.on('score',function(data){
+        var user = findPlayerById(socket.id);
+        user.score += parseInt(data);
+        console.log(user.name + " hat einen Gesamtpunktestand von " + user.score);
 
-    }
-  });
+      });
+      socket.on('answer',function(data){
+        var aktuelleFrage = quizServer.getFrage();
+        var user = findPlayerById(socket.id);
+        console.log(user.name + " hat Antwort " + data + " genommen.");
+        if (aktuelleFrage[5] == aktuelleFrage[data]){
+          user.score += 100;
+          var score = user.score;
+          console.log(score);
+          io.to(socket.id).emit('updateScore',user.score);
 
-  socket.on('getList', function(data,callback){
-    //console.log("hier kam was");
-    var data = getScoreList();
-    callback(data);
-  });
+        }
+      });
+
+      socket.on('getList', function(data,callback){
+        //console.log("hier kam was");
+        var data = getScoreList();
+        callback(data);
+      });
 });
 
 

@@ -1,0 +1,40 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title Quiz Web-App
+        // Bootstrap
+        link(href='css/bootstrap.min.css', rel='stylesheet')
+        link(href='css/main2.css', rel='stylesheet')
+    body
+        nav.navbar
+            .container
+                .navbar-header
+                    button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                    a.navbar-brand(href='#')
+                        img(src='https://w5rq22m8rig3fs3zefz5zucyr-wpengine.netdna-ssl.com/wp-content/themes/onesky/assets/images/customer-stories/quizup-logo.png', width='30%')
+                    p Das Logo ist nur ein Lückenfüller
+                #navbar.navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        //
+                          <li class="active"><a href="#">Hilfe</a></li>
+                          <li><a href="#about">Admin</a></li>
+                // /.nav-collapse
+        .jumbotron(style='height: 200px; text-align: justify;\
+    text-justify: inter-word;')
+            h2(style='text-align: center; word-spacing:1em; letter-spacing:0.7em;')  WILLKOMMEN  BEIM  QUIZ
+        h2.text-center
+            a(href='/client2', style='color:#5bb235; text-decoration: none;') Mitspielen
+        p
+            hr
+        h2.text-center
+            a(href='/quizmaster', style='color:#358ab2; text-decoration: none;') Quiz erstellen
+        p
+        h2.text-center
+            a(href='/monitor', style='color:#b23535; text-decoration: none;') Quiz Monitor
+        // jQuery (necessary for Bootstrap's JavaScript plugins)
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+        // Include all compiled plugins (below), or include individual files as needed
+        script(src='js/bootstrap.min.js')

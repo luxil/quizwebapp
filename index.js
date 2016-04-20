@@ -10,20 +10,27 @@ var quizServer = require('./quizServer');
 var fragenSimulator = require('./dbrandomsimulator');
 var fragen;
 
-app.use('/', express.static(__dirname,'/'));
+app.set('view engine','pug')
+
+app.set('views', path.join(__dirname,'views'));
+
+
+
+
+
+app.use(express.static(path.resolve(__dirname, 'client')));
 
 app.get('/monitor', function(req, res){
-    res.sendFile(path.join(__dirname,'/monitor.html'));
+    res.render('./monitor');
 });
 app.get('/client2', function(req, res){
-
-  res.sendFile(__dirname + '/client2.html');
+    res.render('./client2');
 });
 app.get('/quizmaster',function(req,res){
-  res.sendFile(__dirname + '/quizmaster.html');
+    res.render('./quizmaster');
 });
 app.get('/success',function(req,res){
-  res.sendFile(__dirname + '/success.html');
+    res.render('./success');
 });
 
 users = [];

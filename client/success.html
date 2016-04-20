@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Scores</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+      <script src="/socket.io/socket.io.js"></script>
+      <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="js/success.js"></script>
+  </head>
+  <body onload="score()">
+      <nav class="navbar ">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+
+          </button>
+          <a class="navbar-brand" href="#">HAW QUIZ</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <!--<li class="active"><a href="#">Hilfe</a></li>
+            <li><a href="#about">Admin</a></li>-->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+  <div class="jumbotron" style="text-align: center; height: 200px;">
+<h2> Die Bestenliste </h2>
+</div>
+
+<!--<ul>
+<li>Spieler 1</li>
+<li>Spieler 2</li>
+</ul>-->
+
+<ul class="list-group" id="liste">
+  <!--
+  <li class="list-group-item list-group-item-success"><span class="badge">Punktzahl</span>Karo</li>
+  <li class="list-group-item list-group-item-info"><span class="badge">100</span>Linh</li>
+  <li class="list-group-item list-group-item-warning"><span class="badge">90</span>Hans</li>
+  <li class="list-group-item list-group-item-danger"><span class="badge">65</span>Byron</li>
+  -->
+</ul>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

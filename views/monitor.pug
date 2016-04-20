@@ -1,0 +1,57 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title Monitor
+        link(rel='stylesheet', href='css/monitorblink.css')
+        // Bootstrap
+        link(href='css/bootstrap.min.css', rel='stylesheet')
+        script(src='js/monitor.js')
+        script(src='/socket.io/socket.io.js')
+        script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    body(onload='monitor()')
+        nav.navbar
+            .container
+                .navbar-header
+                    button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+                    a.navbar-brand(href='#')
+                        img(src='https://w5rq22m8rig3fs3zefz5zucyr-wpengine.netdna-ssl.com/wp-content/themes/onesky/assets/images/customer-stories/quizup-logo.png', width='30%')
+                    p Das Logo ist nur ein Lückenfüller
+                #navbar.navbar-collapse.collapse
+                    ul.nav.navbar-nav
+                        //
+                          <li class="active"><a href="#">Hilfe</a></li>
+                          <li><a href="#about">Admin</a></li>
+                // /.nav-collapse
+        .jumbotron(style='text-align: center; height: 200px;')
+            h2
+                #question Warte auf Start durch den Quizmaster!
+                br
+        #timer.timer(style='text-align: center;')
+            h3  Macht euch bereit, es geht gleich los...
+        br
+        .row(style='text-align: center')
+            #mA.col-xs-6.blink(style='background-color: #DFF0D8')
+                h3
+                    | A.
+                    #A
+            // <div class="alert alert-info" role="alert">
+            #mB.col-xs-6(style='background-color: #D9EDF7')
+                h3
+                    | B.
+                    #B
+        .row(style='text-align: center')
+            #mC.col-xs-6(style='background-color: #FCF8E3')
+                h3
+                    | C.
+                    #C
+            #mD.col-xs-6(style='background-color: #F2DEDE')
+                h3
+                    | D.
+                    #D
+        // jQuery (necessary for Bootstrap's JavaScript plugins)
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+        // Include all compiled plugins (below), or include individual files as needed
+        script(src='js/bootstrap.min.js')

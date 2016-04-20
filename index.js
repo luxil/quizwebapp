@@ -34,7 +34,9 @@ app.post('/monitor',function(req,res){
 });
 app.post('/client', function(req,res){
     var nr = req.body.nr;
-    res.render('client',{nummer: nr});
+    var nick = req.body.nick;
+    console.log(nick + " " + nr);
+    res.render('client',{nummer: nr,name: nick});
 });
 
 

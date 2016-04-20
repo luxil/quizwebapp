@@ -15,8 +15,10 @@ html
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     body(onload='lobby()')
         #lobby
-            form(method='post', action='/client' id="form")
+            form(method='post', action='/client', id="form",style="z-index: 1" )
                 input#hidden(type='hidden', name='nr', value='')
-            #liste
+                input#nick(type='text',value="",name="nick")
+                #nameButton Join
+            #liste(style='visibility: hidden;z-index:0')
 
 

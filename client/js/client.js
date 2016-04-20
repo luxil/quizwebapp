@@ -1,10 +1,13 @@
 function client(){
-    var user = prompt("Bitte gib deinen Usernamen ein:");
+    //var user = prompt("Bitte gib deinen Usernamen ein:");
+    var nick = document.getElementById("user");
     var raum = document.getElementById("raum");
     var nr = parseInt(raum.innerHTML);
+    var user = nick.innerHTML;
     var socket = io();
 
     socket.on('connect',function(){
+
         var data=[user,nr];
         console.log(data);
        socket.emit('addPlayer',data);

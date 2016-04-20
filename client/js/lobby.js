@@ -5,7 +5,12 @@ function lobby(){
     var form = document.getElementById("form");
     var hidden = document.getElementById("hidden");
     var liste = document.getElementById("liste");
+    var nick = document.getElementById("nick");
+    var nameButton = document.getElementById("nameButton");
     var check = false;
+
+
+    nameButton.addEventListener("click",named);
 
     socket.emit('getUpdate', 'getUpdateSuccess', function(array){
         console.log(array);
@@ -14,7 +19,12 @@ function lobby(){
         check = true;
     });
 
-
+    function named(){
+        console.log("test");
+        var name = nick.value;
+        liste.style.visibility = "visible";
+        form.style.visibility = "hidden";
+    }
 
     function submitJoin(id){
         var nr = parseInt(id);
@@ -35,7 +45,7 @@ function lobby(){
         var item = document.createElement("button");
         item.id = listItem;
         item.innerHTML=listItem;
-        item.setAttribute("value",listItem);;
+        item.setAttribute("value",listItem);
         liste.appendChild(item);
         addHandler(item);
 

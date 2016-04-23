@@ -12,6 +12,8 @@ function monitor(){
     var mC = document.getElementById("mC");
     var mD = document.getElementById("mD");
     var id = document.getElementById("id");
+    var form = document.getElementById("form");
+    var hidden = document.getElementById("hidden");
 
     var test;
 
@@ -38,7 +40,9 @@ function monitor(){
     });
 
     socket.on('updateScore',function(){
-        window.location.replace("/success");
+        hidden.setAttribute("value",nr);
+        form.submit();
+
     });
 
     socket.on('answerShow',function(data){

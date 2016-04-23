@@ -38,6 +38,12 @@ app.post('/client', function(req,res){
     console.log(nick + " " + nr);
     res.render('client',{nummer: nr,name: nick});
 });
+app.post('/success', function(req,res){
+    var nr = req.body.hidden;
+    console.log(" " + nr);
+    res.render('success',{nummer: nr});
+});
+
 
 
 app.get('/monitor', function(req, res){
@@ -89,7 +95,7 @@ io.on('connection', function(socket){
     });
 
     socket.on('addPlayer',function(data){
-        var user = {socket:socket,id:socket.id,score:0,name:data[0] || "noUser"};
+        var user = {socket:socket,id:socket.id,nr:data[1],score:0,name:data[0] || "noUser"};
         users.push(user);
         console.log(user.name + ' connected with socketID: ' + user.id);
         var nr = parseInt(data[1]);
@@ -107,9 +113,9 @@ io.on('connection', function(socket){
     socket.on('startQuiz in index',function(data){
         fragen = data.allQuestions;
         var raum = data.raum;
-        console.log(raum + "was ist hier looos?");
-        console.log("startquiz");
-        console.log(fragen);
+        console.log("Quiz " + raum + " wurde gestartet");
+        clearRoom(raum);
+        //console.log(fragen);
         console.log("anzahl der Fragen: " + data.anzahl);
         //var fragen = fragenSimulator.gibMirFragen(data);
         quizServer.init(fragen,raum,io);
@@ -132,13 +138,27 @@ io.on('connection', function(socket){
         }
     });
 
-    socket.on('getList', function(data,callback){
-        var data = getScoreList();
-        callback(data);
+    socket.on('getList', function(data){
+        socket.join(data);
+        getScoreList(data);
+
+        //console.log("Daten: " + daten);
+        //io.to(socket.id).emit('getListSuccess',daten);
+
     });
 });
 
-
+function clearRoom(nummer){
+    var nr = nummer;
+    var length = quizRoom.length;
+    for(var i = 0;i<length;i++){
+        if(quizRoom[i]==nr){
+            quizRoom.splice(i);
+            console.log("Quiz " + nr + " kann nicht mehr beigetreten werden.");
+            io.sockets.emit('update',quizRoom);
+        }
+    }
+}
 function findPlayerById(id){
   for(var i = 0; i < users.length;i++){
     if (users[i].id === id){
@@ -147,16 +167,17 @@ function findPlayerById(id){
   }
 };
 
-function getScoreList(){
+function getScoreList(nr){
   //console.log("scorelistenanfrage");
   var currentScores = [];
   for(var i = 0; i < users.length;i++){
-    if(users[i].name != "noUser"){
+    if(users[i].name != "noUser" && users[i].nr == nr){
       var data = [users[i].name,users[i].score];
       currentScores.push(data);
     }
   }
-  return currentScores;
+    console.log("bla " + currentScores);
+    io.sockets.in(nr).emit('getListSuccess',currentScores);
 };
 
 

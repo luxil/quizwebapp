@@ -3,10 +3,15 @@ function score(){
     var socket = io();
     var counter = 0;
     console.log("kurz davor");
+    var id= document.getElementById("id");
+    var nr = parseInt(id.innerHTML);
 
-    socket.emit('getList','getListSuccess',function(data){
+    socket.emit('getList',nr);
+
+
+    socket.on('getListSuccess',function(data){
         console.log("daten kamen" + data);
-        //hier müsste eine sortierte liste kommen --- to do
+        //hier mï¿½sste eine sortierte liste kommen --- to do
         data.forEach(createListItem);
     })
 

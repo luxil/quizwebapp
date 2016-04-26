@@ -10,7 +10,6 @@ app.use(bodyParser.urlencoded({ extended: true}));
 //var addQuestion = require('./mongo');
 var displayAllQuestions = require('./datenbankfiles/displayAllQuestions');
 var quizServer = require('./quizServer');
-var fragenSimulator = require('./dbrandomsimulator');
 var fragen;
 
 app.set('view engine','pug')
@@ -29,13 +28,11 @@ app.get('/',function(req,res){
 
 app.post('/monitor',function(req,res){
     var nr = req.body.hidden;
-    console.log(nr);
     res.render('monitor',{id: nr});
 });
 app.post('/client', function(req,res){
     var nr = req.body.nr;
     var nick = req.body.nick;
-    console.log(nick + " " + nr);
     res.render('client',{nummer: nr,name: nick});
 });
 app.post('/success', function(req,res){
@@ -46,9 +43,7 @@ app.post('/success', function(req,res){
 
 
 
-app.get('/monitor', function(req, res){
-    res.render('monitor');
-});
+
 app.get('/lobby', function(req, res){
     res.render('lobby');
 });
@@ -89,7 +84,6 @@ io.on('connection', function(socket){
 
         }else{
             quizRoom.push(nr);
-
         }
 
     });
@@ -108,7 +102,7 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         // var user = users[socket.id];
         delete users[socket.id];
-        console.log(' disconnected with socketID: ' + socket.id);
+        //console.log(' disconnected with socketID: ' + socket.id);
     });
     socket.on('startQuiz in index',function(data){
         fragen = data.allQuestions;
@@ -123,16 +117,16 @@ io.on('connection', function(socket){
     socket.on('score',function(data){
         var user = findPlayerById(socket.id);
         user.score += parseInt(data);
-        console.log(user.name + " hat einen Gesamtpunktestand von " + user.score);
+        //console.log(user.name + " hat einen Gesamtpunktestand von " + user.score);
     });
     socket.on('answer',function(data){
         var aktuelleFrage = quizServer.getFrage();
         var user = findPlayerById(socket.id);
-        console.log(user.name + " hat Antwort " + data + " genommen.");
+        //console.log(user.name + " hat Antwort " + data + " genommen.");
         if (aktuelleFrage[5] == aktuelleFrage[data]){
           user.score += 100;
           var score = user.score;
-          console.log(score);
+          //console.log(score);
           io.to(socket.id).emit('updateScore',user.score);
 
         }
@@ -141,10 +135,6 @@ io.on('connection', function(socket){
     socket.on('getList', function(data){
         socket.join(data);
         getScoreList(data);
-
-        //console.log("Daten: " + daten);
-        //io.to(socket.id).emit('getListSuccess',daten);
-
     });
 });
 
@@ -168,7 +158,6 @@ function findPlayerById(id){
 };
 
 function getScoreList(nr){
-  //console.log("scorelistenanfrage");
   var currentScores = [];
   for(var i = 0; i < users.length;i++){
     if(users[i].name != "noUser" && users[i].nr == nr){
@@ -176,10 +165,13 @@ function getScoreList(nr){
       currentScores.push(data);
     }
   }
-    console.log("bla " + currentScores);
     io.sockets.in(nr).emit('getListSuccess',currentScores);
 };
-
+function sortList(array){
+    for(var key in array.name){
+        sortArray.push([key,array.name[key]]);
+    }
+};
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

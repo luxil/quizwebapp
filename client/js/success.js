@@ -2,7 +2,6 @@ function score(){
     var liste = document.getElementById("liste");
     var socket = io();
     var counter = 0;
-    console.log("kurz davor");
     var id= document.getElementById("id");
     var nr = parseInt(id.innerHTML);
 
@@ -11,7 +10,6 @@ function score(){
 
     socket.on('getListSuccess',function(data){
         console.log("daten kamen" + data);
-        //hier m�sste eine sortierte liste kommen --- to do
         data.forEach(createListItem);
     })
 
@@ -28,7 +26,6 @@ function score(){
         var scoreItem = document.createElement('span');
         scoreItem.className = "badge";
         scoreItem.innerHTML = data[1];
-
         listItem.appendChild(scoreItem);
         liste.appendChild(listItem);
 

@@ -62,7 +62,7 @@ function client(){
     }
 
     function resetAnswer(){
-        currentPickedAnswer = null;
+        currentPickedAnswer = "0";
         a.style.backgroundColor = "#DFF0D8";
         b.style.backgroundColor = "#D9EDF7";
         c.style.backgroundColor = "#FCF8E3";

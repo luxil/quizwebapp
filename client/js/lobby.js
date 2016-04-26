@@ -6,9 +6,14 @@ function lobby(){
     var hidden = document.getElementById("hidden");
     var liste = document.getElementById("liste");
     var nick = document.getElementById("nick");
+    var lobby = document.getElementById("lobby");
     var nameButton = document.getElementById("nameButton");
     var check = false;
 
+    nameButton.style.visibility = "hidden";
+    $(nick).bind('input',function(){
+        nameButton.style.visibility = "visible";
+    });
 
     nameButton.addEventListener("click",named);
 
@@ -20,18 +25,25 @@ function lobby(){
     });
 
     function named(){
-        console.log("test");
-        var name = nick.value;
         liste.style.visibility = "visible";
         form.style.visibility = "hidden";
+        lobby.style.visibility = "hidden";
+        nameButton.style.visibility = "hidden";
     }
 
     function submitJoin(id){
-        var nr = parseInt(id);
+        var name = nick.value;
+        var length = name.length;
 
-        hidden.setAttribute("value",nr);
-        //alert(hidden.value);
-        $(form).submit();
+        if( length != 0) {
+            var nr = parseInt(id);
+            hidden.setAttribute("value", nr);
+            //alert(hidden.value);
+            $(form).submit();
+        }else{
+            alert("Please enter a Nickname :)");
+            window.location.reload();
+        }
     }
 
     function addHandler(div){

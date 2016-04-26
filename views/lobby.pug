@@ -14,12 +14,11 @@ html
         script(src='https://cdn.socket.io/socket.io-1.2.0.js')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     body(onload='lobby()')
-        #lobby
+        #lobby Nickname
             form(method='post', action='/client', id="form",style="z-index: 1" )
                 input#hidden(type='hidden', name='nr', value='')
                 input#nick(type='text',value="",name="nick")
-                div Nickname
-                    #nameButton Join
+                #nameButton Join
             #liste(style='visibility: hidden;z-index:0')
 
 

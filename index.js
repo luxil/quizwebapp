@@ -77,6 +77,7 @@ io.on('connection', function(socket){
         socket.join(data);
         io.sockets.in(data).emit('connectionEstablished');
         console.log("QuizRaum " + data + " wurde eingerichtet.");
+        socket.emit("test");
         var nr = parseInt(data);
         console.log(nr);
         io.sockets.in(nr).emit('update',quizRoom);
@@ -95,8 +96,8 @@ io.on('connection', function(socket){
         var nr = parseInt(data[1]);
         socket.join(nr);
     });
-    socket.on('getUpdate', function(callback, data){
-        data(quizRoom);
+    socket.on('getUpdate', function(data, callback){
+        callback(quizRoom);
     });
 
     socket.on('disconnect', function(){
@@ -160,18 +161,30 @@ function findPlayerById(id){
 function getScoreList(nr){
   var currentScores = [];
   for(var i = 0; i < users.length;i++){
-    if(users[i].name != "noUser" && users[i].nr == nr){
-      var data = [users[i].name,users[i].score];
-      currentScores.push(data);
-    }
+      if(users[i].name != "noUser" && users[i].nr == nr){
+        var data = [users[i].name,users[i].score];
+        currentScores.push(data);
+      }
   }
-    io.sockets.in(nr).emit('getListSuccess',currentScores);
+    var sorted = selectionSort(currentScores);
+    io.sockets.in(nr).emit('getListSuccess',sorted);
 };
-function sortList(array){
-    for(var key in array.name){
-        sortArray.push([key,array.name[key]]);
+function selectionSort(arr){
+    var maxIdx, temp,
+        len = arr.length;
+    for(var i = 0; i < len; i++){
+        maxIdx = i;
+        for(var  j = i+1; j<len; j++){
+            if(arr[j][1]>arr[maxIdx][1]){
+                maxIdx = j;
+            }
+        }
+        temp = arr[i];
+        arr[i] = arr[maxIdx];
+        arr[maxIdx] = temp;
     }
-};
+    return arr;
+}
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

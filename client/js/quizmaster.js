@@ -5,11 +5,17 @@ function quiz (){
     var qty = document.getElementById("qty");
     var id = document.getElementById("id");
     var connect = document.getElementById("connect");
+    var quiz = document.getElementById("quiz");
 
     goButton.addEventListener("click",startQuiz);
+    goButton.style.visibility = "hidden";
+    quiz.style.visibility = "hidden";
     connect.addEventListener("click",initialize);
     socket.on('test',function(){
        console.log("Connection established");
+        quiz.style.visibility = "visible";
+        goButton.style.visibility = "visible";
+
     });
 
     function initialize(){

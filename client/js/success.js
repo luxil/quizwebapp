@@ -9,7 +9,13 @@ function score(){
 
 
     socket.on('getListSuccess',function(data){
-        console.log("daten kamen" + data);
+        console.log("daten kamen" + data);/*
+        var len = data.length;
+        var daten = [];
+        for(var i = 0; i < len / 2;i++){
+            var teil = data.slice(2);
+            daten.push(teil);
+        }*/
         data.forEach(createListItem);
     })
 

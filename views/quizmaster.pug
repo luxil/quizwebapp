@@ -12,6 +12,17 @@ html
         p ID eingeben:
             input#id(type='text')
             button#connect(type='submit') Verbinden
-        p#quiz Anzahl
-            input#qty(type='number', min='1', max='8')
-            button#go(type='submit') Quiz starten
+        p#questions Fragen
+            ul#liste
+        #add
+            p Frage eingeben:
+            input#frage(type='text', value="Frage")
+            input#antwort(type='text', value="Antwort")
+            input#falsch1(type='text', value="Falsche Antwort 1")
+            input#falsch2(type='text', value="Falsche Antwort 2")
+            input#falsch3(type='text', value="Falsche Antwort 3")
+            button#addFrage(type='submit') Add
+        #players Mitspieler
+            #player
+        button#go(type='submit') Quiz starten
+        button#reset(type='submit') Reset

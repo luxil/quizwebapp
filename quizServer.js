@@ -7,7 +7,7 @@ exports.getFrage = function(){
 exports.init = function(fragen,room,io){
  // io = nio;
   var raum = room;
-
+  console.log(raum +  " ist der Raum ");
 
   this.getFrage = function(){
     return aktuelleFrage;

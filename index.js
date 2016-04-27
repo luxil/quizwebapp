@@ -58,35 +58,59 @@ users = [];
 available = [];
 quizRoom = [];
 roomOwner = {};
+monitors = {};
+
 
 
 
 io.on('connection', function(socket){
+
     socket.on('ready',function(){
         var random = Math.floor(Math.random()*10000);
         while(available.indexOf(random)>-1){
             random = Math.floor(Math.random()*10000);
         }
-        var connected = {socket:socket,id:socket.id,nr:random,isConnected:"false"};
+        var connected = {socket:socket,id:socket.id,nr:random,isConnected:"false",connectedTo:"nobody"};
         available.push(connected);
         roomOwner[socket.id]=random;
         socket.emit('id',random);
         socket.join(random);
     });
-    socket.on('initialize',function(data){
+    socket.on('monitor',function(data){
         socket.join(data);
-        io.sockets.in(data).emit('connectionEstablished');
-        console.log("QuizRaum " + data + " wurde eingerichtet.");
+        console.log("Monitor ist aktiviert");
+        monitors[socket.id]=data;
         socket.emit("test");
-        var nr = parseInt(data);
-        console.log(nr);
-        io.sockets.in(nr).emit('update',quizRoom);
-        if(quizRoom.indexOf(nr)> -1){
-
-        }else{
-            quizRoom.push(nr);
+    });
+    socket.on('joinLobby',function(){
+       socket.join("lobby");
+    });
+    socket.on('initialize',function(data){
+        var len = available.length;
+        var k;
+        for (var i = 0; i < len; i++){
+            if(available[i].nr == data && available[i].connectedTo == "nobody"){
+                available[i].connectedTo = socket.id;
+                k = i;
+            }
         }
+        if(available[k] != undefined && available[k] != "undefined"){
+            if(available[k].connectedTo == socket.id) {
+                socket.join(data);
+                io.sockets.in(data).emit('connectionEstablished');
+                console.log("QuizRaum " + data + " wurde eingerichtet.");
+                socket.emit("test");
+                var nr = parseInt(data);
+                console.log(nr);
+                if (quizRoom.indexOf(nr) > -1) {
 
+                } else {
+                    quizRoom.push(nr);
+
+                }
+                io.sockets.in("lobby").emit('update', quizRoom);
+            }
+        }
     });
 
     socket.on('addPlayer',function(data){
@@ -95,6 +119,7 @@ io.on('connection', function(socket){
         console.log(user.name + ' connected with socketID: ' + user.id);
         var nr = parseInt(data[1]);
         socket.join(nr);
+        updatePlayers(nr);
     });
     socket.on('getUpdate', function(data, callback){
         callback(quizRoom);
@@ -102,16 +127,36 @@ io.on('connection', function(socket){
 
     socket.on('disconnect', function(){
         // var user = users[socket.id];
-        delete users[socket.id];
+        var len = users.length;
+
+        for(var i = 0;i < len; i++){
+            var leng = users[i].length;
+            if(users[i].id === socket.id){
+                var nr = users[i].nr;
+                //users[i].nr = 0;
+                users[i].nr= 0;
+                updatePlayers(nr);
+            }
+        }
+        if(monitors[socket.id] != undefined){
+
+            var nr = monitors[socket.id];
+            delete monitors[socket.id];
+            clearRoom(nr);
+        }
+
         //console.log(' disconnected with socketID: ' + socket.id);
     });
+    socket.on('reset',function(data){
+        io.sockets.in(data).emit('resetClients');
+    });
     socket.on('startQuiz in index',function(data){
-        fragen = data.allQuestions;
-        var raum = data.raum;
+        var fragen = data[1];
+        var raum = data[0];
         console.log("Quiz " + raum + " wurde gestartet");
         clearRoom(raum);
         //console.log(fragen);
-        console.log("anzahl der Fragen: " + data.anzahl);
+        //console.log("anzahl der Fragen: " + data.anzahl);
         //var fragen = fragenSimulator.gibMirFragen(data);
         quizServer.init(fragen,raum,io);
     });
@@ -149,7 +194,7 @@ function clearRoom(nummer){
             io.sockets.emit('update',quizRoom);
         }
     }
-}
+};
 function findPlayerById(id){
   for(var i = 0; i < users.length;i++){
     if (users[i].id === id){
@@ -157,7 +202,19 @@ function findPlayerById(id){
     }
   }
 };
+function updatePlayers(nr){
+    var playerList = [];
+    var len = users.length;
 
+    for(var i = 0;i < len;i++){
+        //var test = users[i].nr
+        if(users[i].nr == nr){
+            playerList.push(users[i].name);
+        }
+    }
+    console.log("playerlist: " + playerList);
+    io.sockets.in(nr).emit('playerUpdate',playerList);
+}
 function getScoreList(nr){
   var currentScores = [];
   for(var i = 0; i < users.length;i++){
@@ -184,7 +241,7 @@ function selectionSort(arr){
         arr[maxIdx] = temp;
     }
     return arr;
-}
+};
 
 http.listen(3000, function(){
   console.log('listening on *:3000');

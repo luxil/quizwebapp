@@ -44,13 +44,15 @@ function monitor(){
         form.submit();
 
     });
-
+    socket.on('resetClients',function(){
+       window.location.replace("/");
+    });
     socket.on('answerShow',function(data){
         checkAnswer(data);
         console.log("answer SHow aufgerufen");
     });
     var nr = parseInt(id.innerHTML);
-    socket.emit('initialize',nr);
+    socket.emit('monitor',nr);
 
 
 

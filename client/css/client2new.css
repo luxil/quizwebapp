@@ -68,19 +68,26 @@ div:nth-of-type(5) {
 #user {
 	background: white;
 	height: 20%;
-	width: 50%;
+	width: 33%;
+}
+#raum {
+    background:white;
+    height: 20%;
+    width: 33%;
 }
 
 #score{
 	background: white;
 	height: 20%;
-	width: 50%;
+	width: 33%;
 	}
 
 .user {
 	text-align: center;	
 }
-
+.raum {
+    text-align: center;
+}
 .score {
 	text-align: center;
 

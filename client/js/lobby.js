@@ -8,7 +8,7 @@ function lobby(){
     var nick = document.getElementById("nick");
     var lobby = document.getElementById("lobby");
     var nameButton = document.getElementById("nameButton");
-    var check = false;
+
 
     nameButton.style.visibility = "hidden";
     $(nick).bind('input',function(){
@@ -21,8 +21,8 @@ function lobby(){
         console.log(array);
         $(liste).empty();
         array.forEach(createListItem);
-        check = true;
     });
+    socket.emit('joinLobby');
 
     function named(){
         liste.style.visibility = "visible";
@@ -64,11 +64,10 @@ function lobby(){
 
     }
     socket.on('update',function(data){
-        console.log("update" + data);
-        if (check == true){
+        console.log(data);
             $(liste).empty();
             data.forEach(createListItem);
-        }
+
     });
 
 }

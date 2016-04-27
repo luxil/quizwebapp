@@ -1,14 +1,14 @@
 function client(){
     //var user = prompt("Bitte gib deinen Usernamen ein:");
     var nick = document.getElementById("user");
-    var raum = document.getElementById("raum");
-    var nr = parseInt(raum.innerHTML);
+    var raum = document.getElementById("nr");
+    var nr = raum.innerHTML;
     var user = nick.innerHTML;
     var socket = io();
 
     socket.on('connect',function(){
-
-        var data=[user,nr];
+        var nummer=parseInt(nr);
+        var data=[user,nummer];
         console.log(data);
        socket.emit('addPlayer',data);
     });
@@ -21,10 +21,7 @@ function client(){
     var c = document.getElementById("c");
     var d = document.getElementById("d");
 
-    var userLabel = document.getElementById("user");
-    var h3 = document.createElement("h2");
-    h3.innerHTML = user;
-    userLabel.appendChild(h3);
+
 
     var scoreLabel = document.getElementById("score");
 
@@ -79,6 +76,9 @@ function client(){
     socket.on('updateScore',function(data){
 
         score = data;
-        scoreLabel.innerHTML = "<h2>" + score + " Punkte </h2> ";
+        scoreLabel.innerHTML =  score + " Punkte";
+    });
+    socket.on('resetClients',function(){
+        window.location.replace("/lobby");
     });
 }

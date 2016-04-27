@@ -111,7 +111,7 @@ io.on('connection', function(socket){
                 console.log("QuizRaum " + data + " wurde eingerichtet.");
                 socket.emit("test");
                 var nr = parseInt(data);
-                console.log(nr);
+               // console.log(nr);
                 if (quizRoom.indexOf(nr) > -1) {
 
                 } else {
@@ -226,7 +226,7 @@ function updatePlayers(nr){
             playerList.push(users[i].name);
         }
     }
-    console.log("playerlist: " + playerList);
+    //console.log("playerlist: " + playerList);
     io.sockets.in(nr).emit('playerUpdate',playerList);
 }
 function getScoreList(nr){

@@ -44,6 +44,11 @@ function quiz (){
     });
     socket.emit('getQuestions', id.value);
 
+    socket.on('wrongID',function(){
+        id.value = "";
+        connect.style.visibility = "visible";
+    });
+
 
     socket.on('showQuestions', function(data){
         daten = data;

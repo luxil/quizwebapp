@@ -120,6 +120,8 @@ io.on('connection', function(socket){
                 }
                 io.sockets.in("lobby").emit('update', quizRoom);
             }
+        }else{
+            io.to(socket.id).emit('wrongID');
         }
     });
     socket.on('idUpdate',function(data){

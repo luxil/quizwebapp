@@ -71,7 +71,10 @@
     -webkit-animation: blinkD 1s linear infinite;
     animation: blinkD 1s linear infinite;
     animation-iteration-count: 3;
-} 
+}
+.player {
+    display: block;
+}
 /*@keyframes blink { 50% { background-color: #ff0000; }  }
 blink{ 
 	color: #ff0000 ;

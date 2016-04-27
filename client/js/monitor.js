@@ -16,6 +16,7 @@ function monitor(){
     var formReset = document.getElementById("formReset");
     var hidden = document.getElementById("hidden");
     var hidden1 = document.getElementById("hidden1");
+    var p = document.getElementById("players");
 
     var test;
     var nr = parseInt(id.innerHTML);
@@ -38,6 +39,11 @@ function monitor(){
         test = data[5];
 
     });
+    socket.on('playerUpdate',function(data){
+        console.log(data);
+        $(p).empty();
+        data.forEach(showPlayer);
+    });
     socket.on('test',function(){
        console.log("Connection established");
     });
@@ -58,7 +64,13 @@ function monitor(){
 
 
 
-
+    function showPlayer(player){
+        var div = document.createElement("element");
+        div.className = "player";
+        div.id = player;
+        div.innerHTML = player ;
+        p.appendChild(div);
+    }
     var checkAnswer = function(answer){
         if (test == answer){
             console.log("antwort korrekt uebermittelt");

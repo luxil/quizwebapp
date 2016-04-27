@@ -77,28 +77,26 @@ exports.init = function(fragen,room,io){
   function logic(){
 
     if (counter == timer && pause == false){
-      console.log("Hier wird die Frage gepickt.");
+      //console.log("Hier wird die Frage gepickt.");
       anzahl -= 1;
       // Momentan nur anzeigen und l�schen der Frage
       aktuelleFrage = Fragen.pop();
       showQuestion();
-      console.log(aktuelleFrage);
+      //console.log(aktuelleFrage);
     }
     if (counter <= 0 && pause == false){
-      console.log(counter);
+      //console.log(counter);
       showTimer();
-      console.log("Jetzt werden Antworten ausgewertet und Punkte vergeben.");
+      //console.log("Jetzt werden Antworten ausgewertet und Punkte vergeben.");
       getAnswer();
       // Hier kommt ein Event um die aktuelle Antwort auszuwerten
       pause = true;
-      console.log("pause wurde true.");
-
       if (anzahl == 0){
 
         counter3++;
         if(counter3 == 2){
         clearInterval(interval);
-        console.log("Quiz beendet");
+        console.log("Quiz " + raum + " beendet");
 
         showScore();
         }
@@ -107,14 +105,14 @@ exports.init = function(fragen,room,io){
       counter = timer;
       }
     }else if(pause == false){
-      console.log(counter);
+      //console.log(counter);
       showTimer();
       counter -= 1;
     }
     else if (pause == true){
       if(counter2 <= 0){
         pause = false;
-        console.log("pause wurde gefalsed");
+        //console.log("pause wurde gefalsed");
         counter2 = timer2;
       }else if(counter2 == timer2){
         showAnswer();

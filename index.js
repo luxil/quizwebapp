@@ -130,7 +130,7 @@ io.on('connection', function(socket){
     socket.on('addPlayer',function(data){
         var user = {socket:socket,id:socket.id,nr:data[1],score:0,name:data[0] || "noUser"};
         users.push(user);
-        console.log(user.name + ' connected with socketID: ' + user.id);
+        //console.log(user.name + ' connected with socketID: ' + user.id);
         var nr = parseInt(data[1]);
         socket.join(nr);
         updatePlayers(nr);

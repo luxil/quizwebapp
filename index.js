@@ -25,6 +25,12 @@ app.use(express.static(path.resolve(__dirname, 'client')));
 app.get('/',function(req,res){
    res.render('index');
 });
+app.post('/',function(req,res){
+    var reset = req.body.hidden;
+    console.log(reset + " hier war der Reset");
+    res.render('index',{reset:reset});
+})
+
 
 app.post('/monitor',function(req,res){
     var nr = req.body.hidden;
@@ -39,6 +45,10 @@ app.post('/success', function(req,res){
     var nr = req.body.hidden;
     console.log(" " + nr);
     res.render('success',{nummer: nr});
+});
+app.post('/lobby',function(req,res){
+   var nick = req.body.hidden;
+    res.render('lobby',{name:nick});
 });
 
 
@@ -112,7 +122,9 @@ io.on('connection', function(socket){
             }
         }
     });
-
+    socket.on('idUpdate',function(data){
+        io.sockets.in(data[0]).emit('updateID',data[1]);
+    })
     socket.on('addPlayer',function(data){
         var user = {socket:socket,id:socket.id,nr:data[1],score:0,name:data[0] || "noUser"};
         users.push(user);

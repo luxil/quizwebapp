@@ -8,11 +8,21 @@ function lobby(){
     var nick = document.getElementById("nick");
     var lobby = document.getElementById("lobby");
     var nameButton = document.getElementById("nameButton");
+    var reset = document.getElementById("resetName");
 
-
+   // var hasReset = reset.innerHTML;
+    console.log("hier: " +reset.innerHTML);
+    if(reset.innerHTML != null && reset.innerHTML != undefined && reset.innerHTML != ""){
+        nick.value = reset.innerHTML;
+        named();
+    }
     nameButton.style.visibility = "hidden";
     $(nick).bind('input',function(){
         nameButton.style.visibility = "visible";
+    });
+
+    $('.noEnterSubmit').keypress(function(e){
+        if ( e.which == 13 ) e.preventDefault();
     });
 
     nameButton.addEventListener("click",named);

@@ -2,6 +2,8 @@ function client(){
     //var user = prompt("Bitte gib deinen Usernamen ein:");
     var nick = document.getElementById("user");
     var raum = document.getElementById("nr");
+    var form = document.getElementById("form");
+    var hidden = document.getElementById("hidden");
     var nr = raum.innerHTML;
     var user = nick.innerHTML;
     var socket = io();
@@ -79,6 +81,8 @@ function client(){
         scoreLabel.innerHTML =  score + " Punkte";
     });
     socket.on('resetClients',function(){
-        window.location.replace("/lobby");
+        hidden.setAttribute("value",user);
+        console.log(hidden);
+        $("form").submit();
     });
 }

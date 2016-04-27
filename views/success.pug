@@ -31,6 +31,8 @@ html(lang='en')
           <li>Spieler 2</li>
           </ul>
         ul#liste.list-group
+        form#formReset(action='/',method='post')
+            input#hidden(name='hidden',type="hidden",value='',form="formReset")
             //
               <li class="list-group-item list-group-item-success"><span class="badge">Punktzahl</span>Karo</li>
               <li class="list-group-item list-group-item-info"><span class="badge">100</span>Linh</li>

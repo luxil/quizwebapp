@@ -54,6 +54,10 @@ function quiz (){
         fragen.forEach(showQuestions);
 
     });
+    socket.on('updateID',function(data){
+        console.log("hier kam die neue id "+ data);
+        id.value = data;
+    });
     function checkReady(){
         console.log("gecheckt");
         var count = p.childElementCount;

@@ -3,6 +3,8 @@ function score(){
     var socket = io();
     var counter = 0;
     var id= document.getElementById("id");
+    var formReset = document.getElementById("formReset");
+    var hidden = document.getElementById("hidden");
     var nr = parseInt(id.innerHTML);
 
     socket.emit('getList',nr);
@@ -17,7 +19,12 @@ function score(){
             daten.push(teil);
         }*/
         data.forEach(createListItem);
-    })
+    });
+
+    socket.on('resetClients',function(){
+        hidden.setAttribute("value",nr);
+        formReset.submit();
+    });
 
     function createListItem(data){
         var listItem = document.createElement('li');

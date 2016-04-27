@@ -13,10 +13,13 @@ function monitor(){
     var mD = document.getElementById("mD");
     var id = document.getElementById("id");
     var form = document.getElementById("form");
+    var formReset = document.getElementById("formReset");
     var hidden = document.getElementById("hidden");
+    var hidden1 = document.getElementById("hidden1");
 
     var test;
-
+    var nr = parseInt(id.innerHTML);
+    socket.emit('monitor',nr);
     socket.on('timerUpdate',function(data){
 
        timer.innerHTML = "<h3>"+ data + "</h3>";
@@ -45,14 +48,14 @@ function monitor(){
 
     });
     socket.on('resetClients',function(){
-       window.location.replace("/");
+       hidden1.setAttribute("value",nr);
+        formReset.submit();
     });
     socket.on('answerShow',function(data){
         checkAnswer(data);
         console.log("answer SHow aufgerufen");
     });
-    var nr = parseInt(id.innerHTML);
-    socket.emit('monitor',nr);
+
 
 
 

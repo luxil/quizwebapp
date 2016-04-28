@@ -8,12 +8,12 @@ function client(){
     var user = nick.innerHTML;
     var socket = io();
 
-    socket.on('connect',function(){
+
         var nummer=parseInt(nr);
         var data=[user,nummer];
         console.log(data);
        socket.emit('addPlayer',data);
-    });
+
     var currentPickedAnswer;
     var score = 0;
 
@@ -27,14 +27,19 @@ function client(){
 
     var scoreLabel = document.getElementById("score");
 
-    a.addEventListener("click",changeAnswer);
-    b.addEventListener("click",changeAnswer);
-    c.addEventListener("click",changeAnswer);
-    d.addEventListener("click",changeAnswer);
+    function resetAnswer(){
+        currentPickedAnswer = "0";
+        a.style.backgroundColor = "#DFF0D8";
+        b.style.backgroundColor = "#D9EDF7";
+        c.style.backgroundColor = "#FCF8E3";
+        d.style.backgroundColor = "#F2DEDE";
+
+    }
 
     function changeAnswer(event){
         resetAnswer();
-        var source = event.srcElement;
+        var source = event.srcElement || event.target;
+        //console.log(source);
         switch (source){
             case a:
                 currentPickedAnswer = 1;
@@ -60,14 +65,7 @@ function client(){
 
     }
 
-    function resetAnswer(){
-        currentPickedAnswer = "0";
-        a.style.backgroundColor = "#DFF0D8";
-        b.style.backgroundColor = "#D9EDF7";
-        c.style.backgroundColor = "#FCF8E3";
-        d.style.backgroundColor = "#F2DEDE";
 
-    }
 
 
 
@@ -76,13 +74,18 @@ function client(){
         resetAnswer();
     });
     socket.on('updateScore',function(data){
-
-        score = data;
-        scoreLabel.innerHTML =  score + " Punkte";
+        if(data != undefined){
+            score = data;
+            scoreLabel.innerHTML =  score + " Punkte";
+        }
     });
     socket.on('resetClients',function(){
         hidden.setAttribute("value",user);
         console.log(hidden);
         $("form").submit();
     });
+    a.addEventListener("click",changeAnswer);
+    b.addEventListener("click",changeAnswer);
+    c.addEventListener("click",changeAnswer);
+    d.addEventListener("click",changeAnswer);
 }

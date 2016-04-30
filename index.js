@@ -25,6 +25,9 @@ app.use(express.static(path.resolve(__dirname, 'client')));
 app.get('/',function(req,res){
    res.render('index');
 });
+app.get('/test',function(req,res){
+    res.render('test');
+});
 app.post('/',function(req,res){
     var reset = req.body.hidden;
     console.log(reset + " hier war der Reset");

@@ -1,0 +1,187 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        title Quiz Erstellen
+        link(rel='stylesheet', href='css/test.css')
+        // Bootstrap
+        link(href='css/bootstrap.min.css', rel='stylesheet')
+        script(src='js/test.js')
+        script(src='/socket.io/socket.io.js')
+        script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+        script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
+        script(src='js/bootstrap.min.js')
+
+    body(onload='test()')
+        #connectSection.container-fluid
+            .row
+                #topBar
+                    .col-lg-3
+                    .col-xs-12.col-lg-7
+                        input#id(type='text',placeholder="Screen ID eingeben.")
+                        button#connect(type='submit') Verbinden
+                    .col-lg-3
+        #inputSection.container-fluid
+            .row
+                #contentBar
+                    .col-lg-3
+                    .col-xs-12.col-lg-7
+                        .row
+                            .col-lg-4.col-xs-4
+                                #1.block 1
+                            .col-lg-4.col-xs-4
+                                #2.block 2
+                            .col-lg-4.col-xs-4
+                                #3.block 3
+                        .row
+                            .col-lg-4.col-xs-4
+                                #4.block 4
+                            .col-lg-4.col-xs-4
+                                #5.block 5
+                            .col-lg-4.col-xs-4
+                                #6.block 6
+                        .row
+                            .col-lg-4.col-xs-4
+                                #7.block 7
+                            .col-lg-4.col-xs-4
+                                #8.block 8
+                            .col-lg-4.col-xs-4
+                                #9.block 9
+                        .row
+                            .col-lg-4.col-xs-4
+                                #c.block Clear
+                            .col-lg-4.col-xs-4
+                                #0.block 0
+                            .col-lg-4.col-xs-4
+                                #call.block Clear all
+                    .col-lg-3
+        #questionSection.container-fluid
+            #content
+                .row
+                    .col-lg-3
+                    .col-xs-12.col-lg-7
+                        #fragen.scrollBox
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check0(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem.questions Was willst du tun?
+                                        #answerItems.answerItems
+                                            .row
+                                                .col-xs-2.col-lg-2
+                                                    #answer.answer Gangstaaa
+                                                .col-xs-2.col-lg-2
+                                                    #wrong1.wrong Schmenksta
+                                                .col-xs-2.col-lg-2
+                                                    #wrong2.wrong Kuhlman
+                                                .col-xs-2.col-lg-2
+                                                    #wrong3.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check1(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem1.questions Was willst du tun?
+                                        #answerItems1.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer01.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong11.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong21.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong31.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check2(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem2.questions Was willst du tun?
+                                        #answerItems2.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer02.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong12.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong22.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong32.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check3(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem3.questions Was willst du tun?
+                                        #answerItems3.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer03.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong13.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong23.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong33.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check4(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem4.questions Was willst du tun?
+                                        #answerItems4.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer04.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong14.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong24.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong34.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check5(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem5.questions Was willst du tun?
+                                        #answerItems5.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer05.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong15.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong25.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong35.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check6(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem6.questions Was willst du tun?
+                                        #answerItems6.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer06.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong16.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong26.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong36.wrong Ein Nudelholz
+                            .row
+                                .col-xs-1.col-lg-1
+                                    input#check7(type="checkbox" class="checkers" checked="true")
+                                .col-xs-11.col-ls-11
+                                    #questionItem7.questions Was willst du tun?
+                                        #answerItems7.answerItems
+                                            .row
+                                                .col-xs-3.col-lg-3
+                                                    #answer07.answer Gangstaaa
+                                                .col-xs-3.col-lg-3
+                                                    #wrong17.wrong Schmenksta
+                                                .col-xs-3.col-lg-3
+                                                    #wrong27.wrong Kuhlman
+                                                .col-xs-3.col-lg-3
+                                                    #wrong37.wrong Ein Nudelholz
+                .col-lg-3

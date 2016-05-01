@@ -73,7 +73,7 @@ function test(){
     function initialize(){
         inputSection.style.height = "0 px";
         inputSection.style.display = "none";
-        questionSection.style.display = "inline";
+        questionSection.style.display = "inline-block";
         //questionSection.style.visibility = "visible";
     }
 

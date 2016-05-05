@@ -57,50 +57,37 @@ html
                                 #0.block 0
                             .col-lg-4.col-xs-4
                                 #call.block Clear all
-        #questionSection.container-fluid
+        #questionSection.container
             #content
                 .row
-                    .col-lg-3
-                    .col-xs-12.col-lg-7
+                    .col-lg-4
+                    .col-xs-12.col-lg-6
                         #fragen.scrollBox
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check0(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem.questions Was willst du tun?
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check1(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem1.questions Was willst du tun?
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check2(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem2.questions Was willst du tun?
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check3(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem3.questions Was willst du tun?
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check4(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem4.questions Was willst du tun?
+                            table#table.table-responsive
+        #questionShowSection.container
+            #fragenContent
+                .row
+                    .col-lg-4
+                    .col-xs-12.col-lg-6
+                        #fragenAnzeige
+        #questionAddSection.container
+            #addContent
+                .row
+                    .col-lg-4
+                    .col-xs-12.col-lg-6
+                        #addAnzeige
+        #bottom.container
+            #bottomContent.botContent
+                .row
+                    .col-lg-4
+                    .col-xs-8.col-lg-4
+                        button#addQuestionButton.addButton Frage hinzuf&uuml;gen
+                .row
+                    .col-lg-4
+                    .col-xs-12.col-lg-7
+                        .col-xs-6.col-lg-3
+                            #players.playerButton Mitspieler
+                                #playercount 0
+                        .col-xs-6.col-lg-4
+                            #go.startButtonArea Waiting for Players
 
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check5(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem5.questions Was willst du tun?
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check6(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem6.questions Was willst du tun?
-                            .row
-                                .col-xs-1.col-lg-1
-                                    input#check7(type="checkbox" class="checkers" checked="true")
-                                .col-xs-11.col-lg-11
-                                    #questionItem7.questions Was willst du tun?

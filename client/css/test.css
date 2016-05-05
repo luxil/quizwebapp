@@ -2,6 +2,7 @@ html,body {
     height: 100%;
     width: 100%;
     overflow: hidden;
+    position: relative;
 }
 #connect {
     width: 100%;
@@ -19,7 +20,8 @@ html,body {
     padding-bottom: 10%;
 }
 #questionSection {
-    height: 70%;
+    z-index: 1;
+    height: 60%;
     display: none;
     overflow: auto;
 }
@@ -28,29 +30,58 @@ html,body {
     //-moz-box-shadow: 6px 6px 9px 1px rgba(0,0,0,0.75);
     //box-shadow: 6px 6px 9px 1px rgba(0,0,0,0.75);
 }
-.answer {
-    display: inline;
-    word-break: break-all;
-    //-webkit-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.75);
-    //-moz-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.75);
-    //box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.75);
+#questionShowSection {
+    z-index: 2;
+    height: 60%;
+    display: none;
+    overflow: hidden;
+    border-color: black;
+    border-style: solid;
+    position: absolute;
+    top:15%;
+    left:30%;
+    width:50%;
+
 }
-.questions {
-    width: 100%;
+#questionAddSection {
+    z-index: 3;
+    height: auto;
+    display: none;
+    overflow: hidden;
+    border-color: green;
+    border-style: solid;
+    background-color: white;
+    position: absolute;
+    top: 15%;
+    left:30%;
+    width:auto;
 }
-.wrong {
-    display: inline;
-    //padding: 3px 15px;
-    border-left: solid;
-    word-break: break-all;
-    //background-color: red;
-    //-webkit-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.75);
-    //-moz-box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.75);
-    //box-shadow: 0px 0px 12px 2px rgba(0,0,0,0.75);
+.questionToggleOn {
+
+    width : 10%;
 }
-.checkers {
-    display: inline;
+.antwortAnzeige {
+    background-color: #67b168;
+
 }
+.allWrongsAnzeige {
+    width: auto;
+}
+.wrongAnzeige {
+    padding-right:5%;
+    background-color: #ce8483;
+    width: auto;
+}
+
+#bottom {
+    height: 30%;
+    display: none;
+    position:absolute;
+    top: calc(80% - 10px)
+
+}
+
+
 .block {
     display: inline-block;
     width: calc(100% - 10px);
@@ -63,7 +94,9 @@ html,body {
     padding-top: 25%;
     text-align: center;
 }
-
+.addButton {
+    width: 100%;
+}
 .orientleft {
     -webkit-transform: rotate(-90deg);
     -webkit-transform-origin:160px 160px;
@@ -77,8 +110,10 @@ html,body {
     position: relative;
     display:inline;
     width:100%;
-    height:calc(70% - 10px);
-    background-color:#475;
+    height:50%;
+    max-height: 40%;
+    //height:calc(70% - 10px);
+    //background-color:#475;
     overflow:scroll;
     overflow-x: hidden;
 }

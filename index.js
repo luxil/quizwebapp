@@ -61,7 +61,7 @@ app.get('/lobby', function(req, res){
     res.render('lobby');
 });
 app.get('/quizmaster',function(req,res){
-    res.render('quizmaster');
+    res.render('test');
 });
 app.get('/success',function(req,res){
     res.render('success');

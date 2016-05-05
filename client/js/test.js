@@ -452,10 +452,10 @@ function test(){
         }
     };*/
 
-/*
+
         screen.orientation.lock('portrait').catch(function() {
             console.log('not chrome');
-        });*/
+        });
     /*
     window.addEventListener('orientationchange', resize, false);
     //window.addEventListener('resize', resize, false);

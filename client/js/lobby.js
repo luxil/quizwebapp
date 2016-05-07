@@ -31,6 +31,15 @@ function lobby(){
         console.log(array);
         $(liste).empty();
         array.forEach(createListItem);
+        var test = liste.firstChild;
+        console.log(test + " das FirstChild");
+        if(test == undefined || test == null){
+            var status = document.createElement("element");
+            status.id = "status";
+            status.className = "status";
+            status.innerHTML = "No Rooms available";
+            liste.appendChild(status);
+        }
     });
     socket.emit('joinLobby');
 
@@ -77,6 +86,15 @@ function lobby(){
         console.log(data);
             $(liste).empty();
             data.forEach(createListItem);
+        var test = liste.firstChild;
+        console.log(test + " das FirstChild");
+        if(test == undefined || test == null){
+            var status = document.createElement("element");
+            status.id = "status";
+            status.className = "status";
+            status.innerHTML = "No Rooms available";
+            liste.appendChild(status);
+        }
 
     });
 

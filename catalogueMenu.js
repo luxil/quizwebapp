@@ -81,8 +81,6 @@ var listCats = function(db) {
                     }
                 }
                 while (numCatID < biggestCatID) catIDforCatName();
-
-
             } else{
                 console.log("No categories avaiable. First create one. ");
                 rl.question("Back with [Enter]..", function (input) {

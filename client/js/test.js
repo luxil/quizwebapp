@@ -14,6 +14,7 @@ function test(){
     var buttonc = document.getElementById("c");
     var buttoncall = document.getElementById("call");
     var connectButton = document.getElementById("connect");
+    var changeCatButton = document.getElementById("changeCat");
     var table = document.getElementById("table");
     var addQuestionButton = document.getElementById("addQuestionButton");
     var go = document.getElementById("go");
@@ -34,6 +35,7 @@ function test(){
     var daten;
     var raum;
     var fragen;
+    var cats;
     var firstConnect = true;
 
     button1.addEventListener("click",addDigit);
@@ -51,8 +53,10 @@ function test(){
     addQuestionButton.addEventListener("click",showAddSection);
 
     connectButton.addEventListener("click",initialize);
+    changeCatButton.addEventListener("click", changeCatAction)
     var socket = io();
-    socket.emit('getQuestions', id.value);
+    socket.emit('getCats');
+    socket.emit('getQuestions', {room: id.value, catID: 10000}); //////hier ändern!!!!!!
 
     // Hier wird der Input der Eingabebuttons auf das id input feld uebergeben.
     function addDigit(event){
@@ -358,6 +362,83 @@ function test(){
             connectButton.disabled = true;
         }
     }
+    function changeCatAction(){             ////AAA
+        console.log("changeCatAction");
+        $(addAnzeige).empty();
+        questionSection.style.height = "0px";
+        questionSection.style.display = "none";
+        questionAddSelector.style.display = "inline";
+        bottomSelector.style.height = "0px";
+        bottomSelector.style.display = "none";
+
+        var fragenItem = document.createElement("p");
+        fragenItem.innerHTML = "Frage:";
+        addAnzeige.appendChild(fragenItem);
+        var fragenInputItem = document.createElement("p");
+        addAnzeige.appendChild(fragenInputItem);
+        var fragenInput = document.createElement("input");
+        fragenInput.id = "f";
+        fragenInput.className = "f";
+        //fragenInput.setAttribute("value","Frage");
+        fragenInputItem.appendChild(fragenInput);
+
+        var antwortItem = document.createElement("p");
+        antwortItem.innerHTML = "Antwort";
+        addAnzeige.appendChild(antwortItem);
+        var antwortInputItem = document.createElement("p");
+        addAnzeige.appendChild(antwortInputItem);
+        var antwortInput = document.createElement("input");
+        antwortInput.id = "a";
+        antwortInput.className = "a";
+        //antwortInput.setAttribute("value","Antwort");
+        antwortInputItem.appendChild(antwortInput);
+
+        var wrongItem1 = document.createElement("p");
+        wrongItem1.innerHTML = "Falsch";
+        addAnzeige.appendChild(wrongItem1);
+        var wrongInputItem1 = document.createElement("p");
+        addAnzeige.appendChild(wrongInputItem1);
+        var wrongInput1 = document.createElement("input");
+        wrongInput1.id = "w1";
+        wrongInput1.className = "w1";
+        //wrongInput1.setAttribute("value","Falsche Antwort 1");
+        wrongInputItem1.appendChild(wrongInput1);
+
+        var wrongItem2 = document.createElement("p");
+        wrongItem2.innerHTML = "Falsch2";
+        addAnzeige.appendChild(wrongItem2);
+        var wrongInputItem2 = document.createElement("p");
+        addAnzeige.appendChild(wrongInputItem2);
+        var wrongInput2 = document.createElement("input");
+        wrongInput2.id = "w2";
+        wrongInput2.className = "w2";
+        //wrongInput2.setAttribute("value","Falsche Antwort 2");
+        wrongInputItem2.appendChild(wrongInput2);
+
+        var wrongItem3 = document.createElement("p");
+        wrongItem3.innerHTML = "Falsch3";
+        addAnzeige.appendChild(wrongItem3);
+        var wrongInputItem3 = document.createElement("p");
+        addAnzeige.appendChild(wrongInputItem3);
+        var wrongInput3 = document.createElement("input");
+        wrongInput3.id = "w3";
+        wrongInput3.className = "w3";
+        //wrongInput3.setAttribute("value","Falsche Antwort 3");
+        wrongInputItem3.appendChild(wrongInput3);
+
+
+
+
+        var button = document.createElement("button");
+        button.innerHTML = "Abbrechen";
+        addReturn(button);
+        addAnzeige.appendChild(button);
+        var button2 = document.createElement("button");
+        button2.innerHTML = "Hinzuf&uuml;gen";
+        addAdd(button2);
+        addAnzeige.appendChild(button2);
+
+    }
     // Der Server sendet das eine falsche ID eingegeben wurde
     socket.on('wrongID',function(){
         idInput.value = "";
@@ -387,8 +468,11 @@ function test(){
         fragen = data.allQuestions;
 
         console.log(fragen);
-
-
+    });
+    socket.on('getCats', function(data){
+        //counter = 0;
+        cats = data.allCats;
+        console.log(fragen);
     });
     // Nach einem reset erhaelt der client die neue ID des alten Monitors
     socket.on('updateID',function(data){

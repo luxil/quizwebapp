@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 //var addQuestion = require('./mongo');
-var displayAllQuestions = require('./datenbankfiles/displayAllQuestions');
+var displayAllQuestions = require('./datenbankfiles/displayAllQuestionsWithCat');
+var getCatsScript = require('./datenbankfiles/getCatsScript');
 var quizServer = require('./quizServer');
 var fragen;
 

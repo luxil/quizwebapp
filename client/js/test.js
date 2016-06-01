@@ -32,6 +32,7 @@ function test(){
     var bottomSelector = document.getElementById("bottom");
     var counter = 0;
     //var counterCat = 0;
+    var currentCatalog = 0;
 
     var daten;
     var raum;
@@ -58,7 +59,7 @@ function test(){
     changeCatButton.addEventListener("click", changeCatAction)
     var socket = io();
     socket.emit('getCats');
-    socket.emit('getQuestions', {room: id.value, catID: tempCatID}); //////hier ändern!!!!!! //AAA
+    socket.emit('getQuestions', {room: id.value, catID: tempCatID}); //////hier ï¿½ndern!!!!!! //AAA
 
     // Hier wird der Input der Eingabebuttons auf das id input feld uebergeben.
     function addDigit(event){
@@ -172,7 +173,7 @@ function test(){
     //Diese Funktion wird aufgerufen wenn der go Button gedrueckt wird
     //Je nach Inhalt wird eine andere Funktion ausgefuehrt
     function goQuiz(){
-        console.log("hallo");
+        //console.log("Quiz started");
         var testValue = go.innerHTML;
         if(testValue == "Start Quiz"){
             startQuiz();
@@ -194,6 +195,7 @@ function test(){
         inputSection.style.display = "inline";
         idInput.value="";
         connectButton.disabled = false;
+        changeCatButton.style.display = "none";
         go.innerHTML="Waiting for Players";
 
     }
@@ -415,8 +417,8 @@ function test(){
         console.log("Connection established");
         inputSection.style.height = "0 px";
         inputSection.style.display = "none";
-
-        /*Linh: Ist das wirklich nötig?
+        changeCatButton.style.display = "block";
+        /*Linh: Ist das wirklich nï¿½tig?
         if(firstConnect){
             fragen.forEach(listQuestions);
             firstConnect = false;
@@ -425,6 +427,7 @@ function test(){
 
         questionSection.style.display = "inline-block";
         bottomSelector.style.display = "block";
+
         go.addEventListener("click",goQuiz);
 
 
@@ -438,13 +441,14 @@ function test(){
         //socket.emit('updateQuestionsByCat');
         $(fragenSelector).empty();
         fragen.forEach(listQuestions);
-        console.log(fragen);
+        console.log("Fragen:" + fragen);
     });
     //AAA
     socket.on('updateQuestionsByCat', function(){
         $(fragenSelector).empty();
         fragen.forEach(listQuestions);
-        showThisQuestion();
+        //showThisQuestion();
+        console.log("hier sind die Fragen " + fragen);
         showQuestionSection(fragen);
     });
     socket.on('tempCatNamesAndIDs', function(data){

@@ -434,7 +434,7 @@ function test(){
     });
     // Hier erhaelt der Client die Fragen und speichert sie lokal.
     socket.on('showQuestions', function(data){
-        //counter = 0;
+        counter = 0;
         daten = data;
         raum = data.raum;
         fragen = data.allQuestions;
@@ -449,7 +449,7 @@ function test(){
         fragen.forEach(listQuestions);
         //showThisQuestion();
         console.log("hier sind die Fragen " + fragen);
-        showQuestionSection(fragen);
+        //showQuestionSection(fragen);
     });
     socket.on('tempCatNamesAndIDs', function(data){
         //counter = 0;

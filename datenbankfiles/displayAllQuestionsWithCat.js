@@ -24,6 +24,7 @@ io.on('connection', function(socket) {
                             //console.log('allQuestion in disyplay: ' + allQuestions);
                             //socket.emit('showQuestions', {anzahl: anzahl,raum:room, allQuestions: allQuestions});
                             socket.emit('showQuestions', {raum: data.room, allQuestions: allQuestions});
+                            console.log("Fragen zu " + tempCatID + " " + allQuestions);
                         }
                     }
                 }
@@ -42,6 +43,7 @@ io.on('connection', function(socket) {
                             //console.log('allQuestion in disyplay: ' + allQuestions);
                             //socket.emit('showQuestions', {anzahl: anzahl,raum:room, allQuestions: allQuestions});
                             socket.emit('showQuestions', {raum: data.room, allQuestions: allQuestions});
+                            console.log("Normale Frage");
                         }
                     }
                 }

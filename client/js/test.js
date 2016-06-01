@@ -379,7 +379,7 @@ function test(){
         questionAddSelector.style.display = "inline";
         bottomSelector.style.height = "0px";
         bottomSelector.style.display = "none";
-
+        $(addAnzeige).empty();
         cats.forEach(listCats);
         var button3 = document.createElement("button");
         button3.innerHTML = "TestCat1";
@@ -410,11 +410,9 @@ function test(){
             }
         }
         console.log(tempCatID);
-        $(fragenSelector).empty();
-        socket.emit('getQuestions', {room: id.value, catID: 3});
-        console.log("fragen: " + fragen);
-        //socket.emit("test");
-        fragen.forEach(listQuestions);
+
+        socket.emit('getQuestions', {room: id.value, catID: tempCatID});
+
         //showQuestionSection();
     }
     function changeTempCatID(c){
@@ -431,10 +429,14 @@ function test(){
         console.log("Connection established");
         inputSection.style.height = "0 px";
         inputSection.style.display = "none";
+
+        /*Linh: Ist das wirklich nötig?
         if(firstConnect){
             fragen.forEach(listQuestions);
             firstConnect = false;
         }
+        */
+
         questionSection.style.display = "inline-block";
         bottomSelector.style.display = "block";
         go.addEventListener("click",goQuiz);
@@ -447,10 +449,16 @@ function test(){
         daten = data;
         raum = data.raum;
         fragen = data.allQuestions;
-
+        //socket.emit('updateQuestionsByCat');
+        $(fragenSelector).empty();
+        fragen.forEach(listQuestions);
         console.log(fragen);
     });
     //AAA
+    socket.on('updateQuestionsByCat', function(){
+        $(fragenSelector).empty();
+        fragen.forEach(listQuestions);
+    });
     socket.on('tempCatNamesAndIDs', function(data){
         //counter = 0;
         cats = data.allCats;
@@ -490,19 +498,12 @@ function test(){
         console.log(notPicked);
         var len = sendArray.length;
         for(var i = 0;i<len;i++){
-
             questionCatalog.push([i,fragen[sendArray[i]][1],fragen[sendArray[i]][2],fragen[sendArray[i]][3],fragen[sendArray[i]][4],fragen[sendArray[i]][5],fragen[sendArray[i]][2]]);
-
-
-
         }
 
         var value = idInput.value;
         socket.emit('startQuiz in index', [value,questionCatalog]);
         go.innerHTML = "Reset";
-
-
-
     }
 /*
      function resize () {

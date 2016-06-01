@@ -56,8 +56,6 @@ app.post('/lobby',function(req,res){
 });
 
 
-
-
 app.get('/lobby', function(req, res){
     res.render('lobby');
 });
@@ -73,8 +71,6 @@ available = [];
 quizRoom = [];
 roomOwner = {};
 monitors = {};
-
-
 
 
 io.on('connection', function(socket){
@@ -192,7 +188,6 @@ io.on('connection', function(socket){
           var score = user.score;
           //console.log(score);
           io.to(socket.id).emit('updateScore',user.score);
-
         }
     });
 

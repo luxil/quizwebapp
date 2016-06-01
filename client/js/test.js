@@ -382,23 +382,9 @@ function test(){
         $(addAnzeige).empty();
         cats.forEach(listCats);
         var button3 = document.createElement("button");
-        button3.innerHTML = "TestCat1";
+        button3.innerHTML = "Ok";
         addAnzeige.appendChild(button3);
-
-        /*
-        var antwortInputItem = document.createElement("p");
-        addAnzeige.appendChild(antwortInputItem);
-        var antwortInput = document.createElement("input");
-        antwortInput.id = "a";
-        antwortInput.className = "a";
-        //antwortInput.setAttribute("value","Antwort");
-        antwortInputItem.appendChild(antwortInput);
-        */
-
-        var button = document.createElement("button");
-        button.innerHTML = "Abbrechen";
-        addReturn(button);
-        addAnzeige.appendChild(button);
+        addReturn(button3);
 
     }
 
@@ -416,7 +402,7 @@ function test(){
         //showQuestionSection();
     }
     function changeTempCatID(c){
-        $(c).on("click",function(){catClicked(c.id)});
+        $(c).on("click",function(){catClicked(c.id), showThisQuestion});
     }
     // Der Server sendet das eine falsche ID eingegeben wurde
     socket.on('wrongID',function(){
@@ -458,6 +444,8 @@ function test(){
     socket.on('updateQuestionsByCat', function(){
         $(fragenSelector).empty();
         fragen.forEach(listQuestions);
+        showThisQuestion();
+        showQuestionSection(fragen);
     });
     socket.on('tempCatNamesAndIDs', function(data){
         //counter = 0;

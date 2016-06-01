@@ -52,8 +52,6 @@ io.on('connection', function(socket) {
                                     //socket.emit('tempCatNamesAndIDs', {allCats: allCats});
                                 }
                             }
-
-
                         }
                     }
                     while (numCatID <= biggestCatID) catIDforCatName();

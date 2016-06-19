@@ -1,13 +1,123 @@
-.questions {
+html,body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+#connect {
+    width: 100%;
+    text-align: center;
+    font-size: 20px;
+}
+#id {
+    width: 100%;
+}
+
+#connectSection {
+    height:10%;
+}
+#inputSection {
+    height:80%;
+    padding-bottom: 10%;
+}
+#questionSection {
+    z-index: 1;
+    height: 60%;
+    display: none;
+    overflow: auto;
+}
+#questionItem {
+//-webkit-box-shadow: 6px 6px 9px 1px rgba(0,0,0,0.75);
+//-moz-box-shadow: 6px 6px 9px 1px rgba(0,0,0,0.75);
+//box-shadow: 6px 6px 9px 1px rgba(0,0,0,0.75);
+}
+#questionShowSection {
+    z-index: 2;
+    height: 60%;
+    display: none;
+    overflow: hidden;
+    border-color: black;
+    border-style: solid;
+    position: absolute;
+    top:15%;
+    left:30%;
+    width:50%;
+
+}
+#questionAddSection {
+    z-index: 3;
+    height: auto;
+    display: none;
+    overflow: hidden;
+    border-color: green;
+    border-style: solid;
+    background-color: white;
+    position: absolute;
+    top: 15%;
+    left:30%;
+    width:auto;
+}
+.questionToggleOn {
+
+    width : 10%;
+}
+.antwortAnzeige {
+    background-color: #67b168;
+
+}
+.allWrongsAnzeige {
+    width: auto;
+}
+.wrongAnzeige {
+    padding-right:5%;
+    background-color: #ce8483;
+    width: auto;
+}
+
+#bottom {
+    height: 30%;
+    display: none;
+    position:absolute;
+    top: calc(80% - 10px)
+
+}
+
+
+.block {
     display: inline-block;
+    width: calc(100% - 10px);
+    height: 100%;
+    margin: 5px;
+    float: right;
+    padding-bottom: 25%;
+    padding-top: 25%;
+    text-align: center;
+    background-color: #358ab2;
+    font-size: 12px;
+    color: #ffffff;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+
 }
-.answers {
-    padding-right: 2%;
+.addButton {
+    width: 100%;
 }
-.checkbox {
-    display:inline-block;
+.orientleft {
+    -webkit-transform: rotate(-90deg);
+    -webkit-transform-origin:160px 160px;
 }
-li {
-    list-style-type: none;
-    padding-bottom: 3%;
+
+.orientright {
+    -webkit-transform: rotate(90deg);
+    -webkit-transform-origin:230px 230px;
+}
+.scrollBox{
+    position: relative;
+    display:inline;
+    width:100%;
+    height:50%;
+    max-height: 40%;
+//height:calc(70% - 10px);
+//background-color:#475;
+    overflow:scroll;
+    overflow-x: hidden;
 }

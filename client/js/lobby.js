@@ -16,10 +16,10 @@ function lobby(){
         nick.value = reset.innerHTML;
         named();
     }
-    nameButton.style.visibility = "hidden";
-    $(nick).bind('input',function(){
-        nameButton.style.visibility = "visible";
-    });
+    // nameButton.style.visibility = "hidden";
+    // $(nick).bind('input',function(){
+    //     nameButton.style.visibility = "visible";
+    // });
 
     $('.noEnterSubmit').keypress(function(e){
         if ( e.which == 13 ) e.preventDefault();

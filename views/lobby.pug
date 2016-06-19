@@ -14,7 +14,11 @@ html
         script(src='https://cdn.socket.io/socket.io-1.2.0.js')
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
     body(onload='lobby()')
-        #lobby Nickname
+        #logo
+            img(src='https://w5rq22m8rig3fs3zefz5zucyr-wpengine.netdna-ssl.com/wp-content/themes/onesky/assets/images/customer-stories/quizup-logo.png', width="8%")
+            p#id Das Logo ist ein Lückenfüller
+        #lobby
+            #nickName Nickname
             form(method='post', action='/client', id="form",style="z-index: 1" )
                 input#hidden(type='hidden', name='nr', value='')
                 input#nick.noEnterSubmit(type='text',value="",name="nick")

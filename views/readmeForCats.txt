@@ -1,1 +1,1 @@
-getCats wird in test.js verwendet
+getCats wird in quizmaster.js verwendet

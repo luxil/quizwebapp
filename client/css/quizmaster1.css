@@ -1,0 +1,13 @@
+.questions {
+    display: inline-block;
+}
+.answers {
+    padding-right: 2%;
+}
+.checkbox {
+    display:inline-block;
+}
+li {
+    list-style-type: none;
+    padding-bottom: 3%;
+}

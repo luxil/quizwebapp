@@ -1,3 +1,41 @@
+
+button#changeCat {
+    background-color: #358AB2; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button#addQuestionButton {
+     background-color: #358AB2; 
+    border: none;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+button#connect {
+    background-color: #358AB2; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+}
+
+input#id {
+  padding: 10px;
+  border: none;
+  border-bottom: solid 2px #c9c9c9;
+  transition: border 0.3s;
+    
+}
+
+
 html,body {
     height: 100%;
     width: 100%;
@@ -36,8 +74,8 @@ html,body {
     height: 60%;
     display: none;
     overflow: hidden;
-    border-color: black;
-    border-style: solid;
+    border: solid 5px #c9c9c9;
+    background-color: white;
     position: absolute;
     top:15%;
     left:30%;
@@ -49,8 +87,7 @@ html,body {
     height: auto;
     display: none;
     overflow: hidden;
-    border-color: green;
-    border-style: solid;
+    border: solid 5px #c9c9c9;
     background-color: white;
     position: absolute;
     top: 15%;

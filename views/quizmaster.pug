@@ -1,94 +1,94 @@
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
-        title Quiz Erstellen
-        link(rel='stylesheet', href='css/quizmaster.css')
-        // Bootstrap
-        link(href='css/bootstrap.min.css', rel='stylesheet')
-        script(src='js/quizmaster.js')
-        script(src='/socket.io/socket.io.js')
-        script(src='https://cdn.socket.io/socket.io-1.2.0.js')
-        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
-        script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
-        script(src='js/bootstrap.min.js')
-
-    body(onload='quizmaster()')
-        #connectSection.container-fluid
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Quiz Erstellen
+    link(rel='stylesheet', href='css/quizmaster.css')
+    // Bootstrap
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    script(src='js/quizmaster.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+    script(src='//code.jquery.com/ui/1.11.4/jquery-ui.js')
+    script(src='js/bootstrap.min.js')
+  body(onload='quizmaster()')
+    #connectSection.container-fluid
+      .row
+        #topBar
+          .col-lg-3
+          .col-xs-12.col-lg-7
+            input#id(type='text', placeholder='Screen ID eingeben.')
+            p
+            button#connect(type='submit') Verbinden
+            p
+            button#changeCat(style='display: none;') Katalog wechseln
+    #inputSection.container-fluid
+      .row
+        #contentBar
+          .col-lg-3
+          .col-xs-12.col-lg-7
             .row
-                #topBar
-                    .col-lg-3
-                    .col-xs-12.col-lg-7
-                        input#id(type='text',placeholder="Screen ID eingeben.")
-                        button#connect(type='submit') Verbinden
-                        button#changeCat(style='display: none;') Katalog wechseln
-
-        #inputSection.container-fluid
+              .col-lg-4.col-xs-4
+                #1.block 1
+              .col-lg-4.col-xs-4
+                #2.block 2
+              .col-lg-4.col-xs-4
+                #3.block 3
             .row
-                #contentBar
-                    .col-lg-3
-                    .col-xs-12.col-lg-7
-                        .row
-                            .col-lg-4.col-xs-4
-                                #1.block 1
-                            .col-lg-4.col-xs-4
-                                #2.block 2
-                            .col-lg-4.col-xs-4
-                                #3.block 3
-                        .row
-                            .col-lg-4.col-xs-4
-                                #4.block 4
-                            .col-lg-4.col-xs-4
-                                #5.block 5
-                            .col-lg-4.col-xs-4
-                                #6.block 6
-                        .row
-                            .col-lg-4.col-xs-4
-                                #7.block 7
-                            .col-lg-4.col-xs-4
-                                #8.block 8
-                            .col-lg-4.col-xs-4
-                                #9.block 9
-                        .row
-                            .col-lg-4.col-xs-4
-                                #c.block Clear
-                            .col-lg-4.col-xs-4
-                                #0.block 0
-                            .col-lg-4.col-xs-4
-                                #call.block Clear all
-        #questionSection.container
-            #content
-                .row
-                    .col-lg-4
-                    .col-xs-12.col-lg-6
-                        #fragen.scrollBox
-                            table#table.table-responsive
-        #questionShowSection.container
-            #fragenContent
-                .row
-                    .col-lg-4
-                    .col-xs-12.col-lg-6
-                        #fragenAnzeige
-        #questionAddSection.container
-            #addContent
-                .row
-                    .col-lg-4
-                    .col-xs-12.col-lg-6
-                        #addAnzeige
-        #bottom.container
-            #bottomContent.botContent
-                .row
-                    .col-lg-4
-                    .col-xs-8.col-lg-4
-                        button#addQuestionButton.addButton Frage hinzuf&uuml;gen
-                .row
-                    .col-lg-4
-                    .col-xs-12.col-lg-7
-                        .col-xs-6.col-lg-3
-                            #players.playerButton Mitspieler
-                                #playercount 0
-                        .col-xs-6.col-lg-4
-                            #go.startButtonArea Waiting for Players
-
+              .col-lg-4.col-xs-4
+                #4.block 4
+              .col-lg-4.col-xs-4
+                #5.block 5
+              .col-lg-4.col-xs-4
+                #6.block 6
+            .row
+              .col-lg-4.col-xs-4
+                #7.block 7
+              .col-lg-4.col-xs-4
+                #8.block 8
+              .col-lg-4.col-xs-4
+                #9.block 9
+            .row
+              .col-lg-4.col-xs-4
+                #c.block Clear
+              .col-lg-4.col-xs-4
+                #0.block 0
+              .col-lg-4.col-xs-4
+                #call.block Clear all
+    #questionSection.container
+      #content
+        .row
+          .col-lg-4
+          .col-xs-12.col-lg-6
+            #fragen.scrollBox
+              table#table.table-responsive
+    #questionShowSection.container
+      #fragenContent
+        .row
+          .col-lg-4
+          .col-xs-12.col-lg-6
+            #fragenAnzeige
+    #questionAddSection.container
+      #addContent
+        .row
+          .col-lg-4
+          .col-xs-12.col-lg-6
+            #addAnzeige
+    #bottom.container
+      #bottomContent.botContent
+        .row
+          .col-lg-4
+          .col-xs-8.col-lg-4
+            button#addQuestionButton.addButton Frage hinzufügen
+        .row
+          .col-lg-4
+          .col-xs-12.col-lg-7
+            .col-xs-6.col-lg-3
+              #players.playerButton
+                | Mitspieler
+                #playercount 0
+            .col-xs-6.col-lg-4
+              #go.startButtonArea Waiting for Players

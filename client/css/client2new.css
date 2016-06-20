@@ -28,6 +28,22 @@ width: 50%;
 position:absolute;
 }*/
 
+#user {
+    padding: 20px;
+    font-size: 40px;
+}
+
+#raum {
+    padding: 20px;
+    font-size: 40px;
+}
+
+#score {
+    padding: 20px;
+    font-size: 40px;
+}
+
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;

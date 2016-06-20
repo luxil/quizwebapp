@@ -1,4 +1,15 @@
 
+#addAnzeige button {
+    background-color:#c9c9c9; 
+    border: none;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+
 button#changeCat {
     background-color: #358AB2; 
     border: none;
@@ -34,6 +45,7 @@ input#id {
   transition: border 0.3s;
     
 }
+
 
 
 html,body {

@@ -33,3 +33,13 @@ a:hover {
     font-size: 20px;
 }
 
+#liste button {
+    background-color: #5bb235; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+}
+

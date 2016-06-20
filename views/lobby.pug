@@ -22,7 +22,8 @@ html
             form(method='post', action='/client', id="form",style="z-index: 1" )
                 input#hidden(type='hidden', name='nr', value='')
                 input#nick.noEnterSubmit(type='text',value="",name="nick")
-                #nameButton Join
+                p
+                input#nameButton(type='submit',for='',value='Join')
             #liste(style='visibility: hidden;z-index:0')
             #resetName #{name}
 

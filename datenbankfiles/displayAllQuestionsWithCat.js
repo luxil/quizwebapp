@@ -24,14 +24,15 @@ io.on('connection', function(socket) {
                             //console.log('allQuestion in disyplay: ' + allQuestions);
                             //socket.emit('showQuestions', {anzahl: anzahl,raum:room, allQuestions: allQuestions});
                             socket.emit('showQuestions', {raum: data.room, allQuestions: allQuestions});
-                            console.log("Fragen zu " + tempCatID + " " + allQuestions);
+                            console.log("Fragen zu " + tempCatID );
+                            console.log( " " + allQuestions);
                         }
                     }
                 }
             );
         }
         else{
-            dbConn.collection(questionCatalog).find({}, {}, {}).toArray(
+            dbConn.collection(questionCatalog).find({catID: 0}).toArray(
                 function (err, docs) {
                     for (index = 0; index < docs.length; index++) {
                         //console.log("[" + index + "]" + docs[index].question);

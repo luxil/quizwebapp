@@ -100,10 +100,10 @@ function quizmaster(){
     //Hier wird der Frageneingabe Bereich angezeigt
     function showAddSection(){
         $(addAnzeige).empty();
-        questionSection.style.height = "0px";
+        //questionSection.style.height = "0px";
         questionSection.style.display = "none";
         questionAddSelector.style.display = "inline";
-        bottomSelector.style.height = "0px";
+        //bottomSelector.style.height = "0px";
         bottomSelector.style.display = "none";
 
         var fragenItem = document.createElement("p");
@@ -203,11 +203,14 @@ function quizmaster(){
     //Hier wird die Ansicht auf die normale Fragenuebersicht geaendert
     function showThisQuestion(){
         //questionShowSectionSelector.style.height = "0px";
+        //addAnzeige.style.visibility = "none";
+        //console.log("none!!");
         questionShowSectionSelector.style.display = "none";
         questionAddSelector.style.display = "none";
-        questionSection.style.height = "60%";
+
+        //questionSection.style.height = "60%";
         questionSection.style.display = "inline-block";
-        bottomSelector.style.height ="30%";
+        //bottomSelector.style.height ="30%";
         bottomSelector.style.display = "block";
 
 
@@ -332,6 +335,7 @@ function quizmaster(){
     }
     // Erstellen der Fragenuebersichtsanzeige einmalig
     function listQuestions(array){
+
         var el = document.createElement("tr");
         el.className = "questions";
         el.id = "frage"+counter;
@@ -349,7 +353,7 @@ function quizmaster(){
 
         addToggle(button);
         addShowQuestion(fragenItem);
-
+        console.log(fragenSelector.firstChild.innerHTML);
         counter++;
     }
     // Wenn eine Id eingegeben wurde und der Button gedrueckt wurde
@@ -377,17 +381,14 @@ function quizmaster(){
     }
     function changeCatAction(){             ////AAA
         console.log("changeCatAction");
-        questionSection.style.height = "0px";
+        //questionSection.style.height = "0px";
         questionSection.style.display = "none";
         questionAddSelector.style.display = "inline";
-        bottomSelector.style.height = "0px";
+        //bottomSelector.style.height = "0px";
         bottomSelector.style.display = "none";
         $(addAnzeige).empty();
         cats.forEach(listCats);
-        var button3 = document.createElement("button");
-        button3.innerHTML = "Ok";
-        addAnzeige.appendChild(button3);
-        addReturn(button3);
+
 
     }
 
@@ -401,11 +402,12 @@ function quizmaster(){
         console.log(tempCatID);
 
         socket.emit('getQuestions', {room: id.value, catID: tempCatID});
-
+        //showThisQuestion();
+        //setTimeout(showThisQuestion,1000);
         //showQuestionSection();
     }
     function changeTempCatID(c){
-        $(c).on("click",function(){catClicked(c.id), showThisQuestion});
+        $(c).on("click",function(){catClicked(c.id),showThisQuestion()});
     }
     // Der Server sendet das eine falsche ID eingegeben wurde
     socket.on('wrongID',function(){
@@ -416,7 +418,7 @@ function quizmaster(){
     // Input wird ausgeblendet, Fragen und Bottom werden angezeigt
     socket.on('test',function(){
         console.log("Connection established");
-        inputSection.style.height = "0 px";
+        //inputSection.style.height = "0 px";
         inputSection.style.display = "none";
         changeCatButton.style.display = "block";
         /*Linh: Ist das wirklich n�tig?
@@ -442,8 +444,10 @@ function quizmaster(){
         fragen = data.allQuestions;
         //socket.emit('updateQuestionsByCat');
         $(fragenSelector).empty();
+
         fragen.forEach(listQuestions);
-        console.log("Fragen:" + fragen);
+        console.log("Fragen:");
+        console.log(fragen);
     });
     //AAA
     socket.on('updateQuestionsByCat', function(){

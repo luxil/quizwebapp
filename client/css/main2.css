@@ -26,6 +26,7 @@ a:hover {
     font-size: 30px;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
+
 #nameButton {
     text-align: center;
     color: white;
@@ -41,8 +42,8 @@ a:hover {
     background-color:white;
     margin-top: 0;
     margin-left: 0;
-    padding-left: 18%;
-    padding-right: 18%;
+    padding-left: 13%;
+    padding-right: 13%;
     
 }
 
@@ -50,8 +51,7 @@ a:hover {
   padding: 10px;
   border: none;
   border-bottom: solid 2px #c9c9c9;
-  transition: border 0.3s;
-    
+  transition: border 0.3s;    
 }
 
 

@@ -10,23 +10,19 @@ function lobby(){
     var nameButton = document.getElementById("nameButton");
     var reset = document.getElementById("resetName");
 
-   // var hasReset = reset.innerHTML;
-    console.log("hier: " +reset.innerHTML);
+    // Wenn reset eine ID enthaelt wird der Name eingesetzt und die Liste angezeigt
     if(reset.innerHTML != null && reset.innerHTML != undefined && reset.innerHTML != ""){
         nick.value = reset.innerHTML;
         named();
     }
-    // nameButton.style.visibility = "hidden";
-    // $(nick).bind('input',function(){
-    //     nameButton.style.visibility = "visible";
-    // });
-
+    // Dieser jQuery Handler verhindert ein ungewolltes Ausloesen von form.submit()
     $('.noEnterSubmit').keypress(function(e){
         if ( e.which == 13 ) e.preventDefault();
     });
 
-    nameButton.addEventListener("click",named);
 
+    //Dieser Handler sendet ein getUpdate und erhaelt als Callback die Liste der
+    // aktuell verfuegbaren Quiz Raeumen.
     socket.emit('getUpdate', 'getUpdateSuccess', function(array){
         console.log(array);
         $(liste).empty();
@@ -41,15 +37,17 @@ function lobby(){
             liste.appendChild(status);
         }
     });
+    // Hier teilt der Client dem Server mit, dass er dem Lobby Channel beitreten moechte.
     socket.emit('joinLobby');
 
+    // Aendert die Ansicht auf die Lobbyliste
     function named(){
         liste.style.visibility = "visible";
         form.style.visibility = "hidden";
         lobby.style.visibility = "hidden";
-        nameButton.style.visibility = "hidden";
+        nameButton.parentNode.style.visibility = "hidden";
     }
-
+    // Hier wird der Beitritt eines User ausgeloest
     function submitJoin(id){
         var name = nick.value;
         var length = name.length;
@@ -64,13 +62,13 @@ function lobby(){
             window.location.reload();
         }
     }
-
+    // Einzelne Lobby items werden mit dem submitJoin verbunden
     function addHandler(div){
         $(div).on("click",function(){submitJoin(div.id);});
     }
 
 
-
+    // Hier wird die Lobbyliste generiert
     function createListItem(listItem){
 
         var item = document.createElement("button");
@@ -82,6 +80,7 @@ function lobby(){
 
 
     }
+    // Event wenn die Raumliste veraendert wurde
     socket.on('update',function(data){
         console.log(data);
             $(liste).empty();
@@ -97,6 +96,11 @@ function lobby(){
         }
 
     });
+
+    // Eventhandler wird angehaengt
+    nameButton.addEventListener("click",named);
+
+    // Anpassung der Styles fuer desktop
     function changeStyles(){
         var width = window.innerWidth;
         if(width > 768){
@@ -107,7 +111,6 @@ function lobby(){
             join.style.paddingLeft = "40%";
             join.style.paddingRight = "40%";
         }
-        //alert(width);
     }
     $(document).ready(function(){
         changeStyles();

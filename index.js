@@ -1,3 +1,4 @@
+// Importieren der benoetigten Packages
 var express = require('express');
 var app = express();
 var http = require('http').createServer(app);
@@ -7,12 +8,12 @@ var path = require('path');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
-//var addQuestion = require('./mongo');
 var displayAllQuestions = require('./datenbankfiles/displayAllQuestionsWithCat');
 var getCatsScript = require('./datenbankfiles/getCatsScript');
 var quizServer = require('./quizServer');
 var fragen;
 
+// View engine wird auf pug gesetzt
 app.set('view engine','pug')
 
 app.set('views', path.join(__dirname,'views'));
@@ -20,9 +21,11 @@ app.set('views', path.join(__dirname,'views'));
 
 
 
-
+// Als Bereich fuer die Clienten wird der client Ordner als root verwendet
 app.use(express.static(path.resolve(__dirname, 'client')));
 
+
+// Routing handler
 app.get('/',function(req,res){
    res.render('index');
 });
@@ -31,11 +34,8 @@ app.get('/test',function(req,res){
 });
 app.post('/',function(req,res){
     var reset = req.body.hidden;
-    console.log(reset + " hier war der Reset");
     res.render('index',{reset:reset});
-})
-
-
+});
 app.post('/monitor',function(req,res){
     var nr = req.body.hidden;
     res.render('monitor',{id: nr});
@@ -47,15 +47,12 @@ app.post('/client', function(req,res){
 });
 app.post('/success', function(req,res){
     var nr = req.body.hidden;
-    console.log(" " + nr);
     res.render('success',{nummer: nr});
 });
 app.post('/lobby',function(req,res){
    var nick = req.body.hidden;
     res.render('lobby',{name:nick});
 });
-
-
 app.get('/lobby', function(req, res){
     res.render('lobby');
 });
@@ -66,6 +63,7 @@ app.get('/success',function(req,res){
     res.render('success');
 });
 
+// Globale Variablen werden zur User Kontrolle verwendet
 users = [];
 available = [];
 quizRoom = [];
@@ -74,7 +72,8 @@ monitors = {};
 
 
 io.on('connection', function(socket){
-
+    // Wird von jedem Clienten aufgerufen der auf das Homeverzeichnet verbindet
+    // Hier wird eine einzigartige ID generiert, vergeben und versendet
     socket.on('ready',function(){
         var random = Math.floor(Math.random()*10000);
         while(available.indexOf(random)>-1){
@@ -86,16 +85,21 @@ io.on('connection', function(socket){
         socket.emit('id',random);
         socket.join(random);
     });
+
+    // Ein Monitor Client wird verbunden
     socket.on('monitor',function(data){
         socket.join(data);
         console.log("Monitor ist aktiviert");
         monitors[socket.id]=data;
         socket.emit("test");
     });
+    // Fuegt einen Clienten zum lobby Raum hinzu
     socket.on('joinLobby',function(){
        socket.join("lobby");
     });
+    // Wird aufgerufen wenn ein Quizmaster eine ID uebermittelt.
     socket.on('initialize',function(data){
+        // Es wird ueberprueft ob der Socket mit der ID bereits einen Quizmaster hat
         var len = available.length;
         var k;
         for (var i = 0; i < len; i++){
@@ -104,14 +108,16 @@ io.on('connection', function(socket){
                 k = i;
             }
         }
+
         if(available[k] != undefined && available[k] != "undefined"){
+            // Wenn die Verbindung vom richtigen Quizmaster aufgebaut wurde wird
+            // der Raum eingerichtet
             if(available[k].connectedTo == socket.id) {
                 socket.join(data);
                 io.sockets.in(data).emit('connectionEstablished');
                 console.log("QuizRaum " + data + " wurde eingerichtet.");
                 socket.emit("test");
                 var nr = parseInt(data);
-               // console.log(nr);
                 if (quizRoom.indexOf(nr) > -1) {
 
                 } else {
@@ -124,21 +130,23 @@ io.on('connection', function(socket){
             io.to(socket.id).emit('wrongID');
         }
     });
+    // Wird verwendet um alte IDs zu aktualisieren
     socket.on('idUpdate',function(data){
         io.sockets.in(data[0]).emit('updateID',data[1]);
-    })
+    });
+    // Ein Spieler wird einem Quiz hinzugefuegt
     socket.on('addPlayer',function(data){
         var user = {socket:socket,id:socket.id,nr:data[1],score:0,name:data[0] || "noUser"};
         users.push(user);
-        //console.log(user.name + ' connected with socketID: ' + user.id);
         var nr = parseInt(data[1]);
         socket.join(nr);
         updatePlayers(nr);
     });
+    // Eine neue Raumliste wird angefordert und versendet
     socket.on('getUpdate', function(data, callback){
         callback(quizRoom);
     });
-
+    // Wenn ein Client disconnected wird dieser aus den Listen entfernt.
     socket.on('disconnect', function(){
         // var user = users[socket.id];
         var len = users.length;
@@ -159,44 +167,40 @@ io.on('connection', function(socket){
             clearRoom(nr);
         }
 
-        //console.log(' disconnected with socketID: ' + socket.id);
     });
+    // Wird von einem Quizmaster aufgerufen und laesst alle verbundenen Clienten reseten
     socket.on('reset',function(data){
         io.sockets.in(data).emit('resetClients');
     });
+    // Hier wird ein Quiz gestartet mit den uebermittelten Fragen und an quizServer uebergeben.
     socket.on('startQuiz in index',function(data){
         var fragen = data[1];
         var raum = data[0];
         console.log("Quiz " + raum + " wurde gestartet");
         clearRoom(raum);
-        //console.log(fragen);
-        //console.log("anzahl der Fragen: " + data.anzahl);
-        //var fragen = fragenSimulator.gibMirFragen(data);
         quizServer.init(fragen,raum,io);
     });
-    socket.on('score',function(data){
-        var user = findPlayerById(socket.id);
-        user.score += parseInt(data);
-        //console.log(user.name + " hat einen Gesamtpunktestand von " + user.score);
-    });
+    // Hier wird die Antwort eines Mitspielers ausgewertet und sein Score zurueckgesendet
+    // socket.on('score',function(data){
+    //     var user = findPlayerById(socket.id);
+    //     user.score += parseInt(data);
+    // });
     socket.on('answer',function(data){
         var aktuelleFrage = quizServer.getFrage();
         var user = findPlayerById(socket.id);
-        //console.log(user.name + " hat Antwort " + data + " genommen.");
         if (aktuelleFrage[5] == aktuelleFrage[data]){
           user.score += 100;
           var score = user.score;
-          //console.log(score);
           io.to(socket.id).emit('updateScore',user.score);
         }
     });
-
+    // Hier wird die jeweilige Punkteliste eines Raumes abgefragt und versendet
     socket.on('getList', function(data){
         socket.join(data);
         getScoreList(data);
     });
 });
-
+// Ein gestarteter Quizraum kann nicht mehr betreten werden
 function clearRoom(nummer){
     var nr = nummer;
     var length = quizRoom.length;
@@ -208,6 +212,7 @@ function clearRoom(nummer){
         }
     }
 };
+// Findet die id eines bestimmten Spielers
 function findPlayerById(id){
   for(var i = 0; i < users.length;i++){
     if (users[i].id === id){
@@ -215,19 +220,19 @@ function findPlayerById(id){
     }
   }
 };
+// Aktuelle Mitspielerliste
 function updatePlayers(nr){
     var playerList = [];
     var len = users.length;
 
     for(var i = 0;i < len;i++){
-        //var test = users[i].nr
         if(users[i].nr == nr){
             playerList.push(users[i].name);
         }
     }
-    //console.log("playerlist: " + playerList);
     io.sockets.in(nr).emit('playerUpdate',playerList);
 }
+//Hier werden die einzelnen Scores ermittelt und sortiert.
 function getScoreList(nr){
   var currentScores = [];
   for(var i = 0; i < users.length;i++){

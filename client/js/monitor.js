@@ -1,6 +1,6 @@
 function monitor(){
     var socket = io();
-
+    // Selectoren
     var timer = document.getElementById("timer");
     var question = document.getElementById("question");
     var A = document.getElementById("A");
@@ -18,52 +18,62 @@ function monitor(){
     var hidden1 = document.getElementById("hidden1");
     var p = document.getElementById("players");
 
-    var test;
+
+    //Client meldet sich bei dem Quiz als monitor an
     var nr = parseInt(id.innerHTML);
     socket.emit('monitor',nr);
+
+    // Socket handler
+
+    // Timer wird hier aktualisiert
     socket.on('timerUpdate',function(data){
 
        timer.innerHTML = "<h3>"+ data + "</h3>";
     });
+
+    // Eine neue Frage wird auf die korrekten Elemente verteilt
     socket.on('questionUpdate',function(data){
         mA.className = "col-xs-6";
         mB.className = "col-xs-6";
         mC.className = "col-xs-6";
         mD.className = "col-xs-6";
-       question.innerHTML = data[0];
+        question.innerHTML = data[0];
         A.innerHTML = data[1];
         B.innerHTML = data[2];
         C.innerHTML = data[3];
         D.innerHTML = data[4];
 
-        test = data[5];
 
     });
+    // Die aktuellen Spieler werden angezeigt
     socket.on('playerUpdate',function(data){
         console.log(data);
         $(p).empty();
         data.forEach(showPlayer);
     });
+    // Verbindungsaufbau wird angezeigt
     socket.on('test',function(){
        console.log("Connection established");
     });
-
+    // Wird ausgeloest um am Ende des Quiz zu success zu gelangen
     socket.on('updateScore',function(){
         hidden.setAttribute("value",nr);
         form.submit();
 
     });
+    // Wird vom Quizmaster bei Reset ausgeloest
     socket.on('resetClients',function(){
        hidden1.setAttribute("value",nr);
         formReset.submit();
     });
+    // Loest Ueberpruefung von aktueller Antwort aus
     socket.on('answerShow',function(data){
         checkAnswer(data);
         console.log("answer SHow aufgerufen");
     });
 
 
-
+    // Zeigt aktuelle Spieler an
     function showPlayer(player){
         var div = document.createElement("element");
         div.className = "player";
@@ -71,10 +81,8 @@ function monitor(){
         div.innerHTML = player ;
         p.appendChild(div);
     }
+    // Ueberprueft die aktuelle Antwort und laesst die richtige Antwort aufblinken
     var checkAnswer = function(answer){
-        if (test == answer){
-            console.log("antwort korrekt uebermittelt");
-        }
         if(A.innerHTML == answer){
             mA.className += " blinkA";
 
@@ -99,6 +107,7 @@ function monitor(){
 
         }
     }
+    // Anpassung der Styles fuer desktop
     function changeStyles(){
         var width = window.innerWidth;
         if(width > 768){
@@ -107,7 +116,6 @@ function monitor(){
             logo.firstChild.style.height = "70px";
 
         }
-        //alert(width);
     }
     $(document).ready(function(){
         changeStyles();

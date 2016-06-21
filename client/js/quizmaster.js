@@ -18,10 +18,6 @@ function quizmaster(){
     var table = document.getElementById("table");
     var addQuestionButton = document.getElementById("addQuestionButton");
     var go = document.getElementById("go");
-
-
-
-    //ContentSelector
     var inputSection = document.getElementById("inputSection");
     var questionSection = document.getElementById("questionSection");
     var fragenSelector = document.getElementById("fragen");
@@ -30,10 +26,10 @@ function quizmaster(){
     var questionAddSelector = document.getElementById("questionAddSection");
     var addAnzeige = document.getElementById("addAnzeige");
     var bottomSelector = document.getElementById("bottom");
-    var counter = 0;
-    //var counterCat = 0;
-    var currentCatalog = 0;
 
+    // Globale Variablen
+    var counter = 0;
+    var currentCatalog = 0;
     var daten;
     var raum;
     var fragen;
@@ -41,6 +37,7 @@ function quizmaster(){
     var firstConnect = true;
     var tempCatID = 10000;
 
+    // Eventhandler werden an die Nummern gehaengt
     button1.addEventListener("click",addDigit);
     button2.addEventListener("click",addDigit);
     button3.addEventListener("click",addDigit);
@@ -53,10 +50,14 @@ function quizmaster(){
     button10.addEventListener("click",addDigit);
     buttonc.addEventListener("click",addDigit);
     buttoncall.addEventListener("click",addDigit);
-    addQuestionButton.addEventListener("click",showAddSection);
 
+    // Button handler werdern angehaengt
+    addQuestionButton.addEventListener("click",showAddSection);
     connectButton.addEventListener("click",initialize);
-    changeCatButton.addEventListener("click", changeCatAction)
+    changeCatButton.addEventListener("click", changeCatAction);
+
+    // Socket wird initialisiert. Kategorien und Fragen aus dem ersten Katalog
+    // werden erfragt
     var socket = io();
     socket.emit('getCats');
     socket.emit('getQuestions', {room: id.value, catID: tempCatID}); //////hier �ndern!!!!!! //AAA
@@ -100,10 +101,8 @@ function quizmaster(){
     //Hier wird der Frageneingabe Bereich angezeigt
     function showAddSection(){
         $(addAnzeige).empty();
-        //questionSection.style.height = "0px";
         questionSection.style.display = "none";
         questionAddSelector.style.display = "inline";
-        //bottomSelector.style.height = "0px";
         bottomSelector.style.display = "none";
 
         var fragenItem = document.createElement("p");
@@ -114,7 +113,6 @@ function quizmaster(){
         var fragenInput = document.createElement("input");
         fragenInput.id = "f";
         fragenInput.className = "f";
-        //fragenInput.setAttribute("value","Frage");
         fragenInputItem.appendChild(fragenInput);
 
         var antwortItem = document.createElement("p");
@@ -125,7 +123,6 @@ function quizmaster(){
         var antwortInput = document.createElement("input");
         antwortInput.id = "a";
         antwortInput.className = "a";
-        //antwortInput.setAttribute("value","Antwort");
         antwortInputItem.appendChild(antwortInput);
 
         var wrongItem1 = document.createElement("p");
@@ -136,7 +133,6 @@ function quizmaster(){
         var wrongInput1 = document.createElement("input");
         wrongInput1.id = "w1";
         wrongInput1.className = "w1";
-        //wrongInput1.setAttribute("value","Falsche Antwort 1");
         wrongInputItem1.appendChild(wrongInput1);
 
         var wrongItem2 = document.createElement("p");
@@ -147,7 +143,6 @@ function quizmaster(){
         var wrongInput2 = document.createElement("input");
         wrongInput2.id = "w2";
         wrongInput2.className = "w2";
-        //wrongInput2.setAttribute("value","Falsche Antwort 2");
         wrongInputItem2.appendChild(wrongInput2);
 
         var wrongItem3 = document.createElement("p");
@@ -158,7 +153,6 @@ function quizmaster(){
         var wrongInput3 = document.createElement("input");
         wrongInput3.id = "w3";
         wrongInput3.className = "w3";
-        //wrongInput3.setAttribute("value","Falsche Antwort 3");
         wrongInputItem3.appendChild(wrongInput3);
 
         var button = document.createElement("button");
@@ -173,7 +167,6 @@ function quizmaster(){
     //Diese Funktion wird aufgerufen wenn der go Button gedrueckt wird
     //Je nach Inhalt wird eine andere Funktion ausgefuehrt
     function goQuiz(){
-        //console.log("Quiz started");
         var testValue = go.innerHTML;
         if(testValue == "Start Quiz"){
             startQuiz();
@@ -367,31 +360,25 @@ function quizmaster(){
             connectButton.disabled = true;
         }
     }
-
+    // Aktuelle Kategorien werden angehaengt
     function listCats(array){
         var button = document.createElement("button");
         button.id = "cat"+array[0];
         button.innerHTML = array[1];
         addAnzeige.appendChild(button);
         changeTempCatID(button);
-        //counterCat++;
-        /////
-        //fragenItem.className = ("question");
-        //addShowQuestion(fragenItem);
     }
-    function changeCatAction(){             ////AAA
+    // Wird aufgerufen wenn der Kategorie Button gedrueckt wird
+    // und zeigt diese an
+    function changeCatAction(){
         console.log("changeCatAction");
-        //questionSection.style.height = "0px";
         questionSection.style.display = "none";
         questionAddSelector.style.display = "inline";
-        //bottomSelector.style.height = "0px";
         bottomSelector.style.display = "none";
         $(addAnzeige).empty();
         cats.forEach(listCats);
-
-
     }
-
+    // Die Fragen fuer die ausgewaehlte Kategorie werden erfragt
     function catClicked(id){
         //console.log("id bei catClicked:" + id);
         for (var i = 0; i < 50; i++){
@@ -406,6 +393,8 @@ function quizmaster(){
         //setTimeout(showThisQuestion,1000);
         //showQuestionSection();
     }
+    // Wird beim Click Event aufgerufen und laesst Fragen passend
+    // zu der Kategorie erfragen und anzeigen
     function changeTempCatID(c){
         $(c).on("click",function(){catClicked(c.id),showThisQuestion()});
     }
@@ -418,23 +407,12 @@ function quizmaster(){
     // Input wird ausgeblendet, Fragen und Bottom werden angezeigt
     socket.on('test',function(){
         console.log("Connection established");
-        //inputSection.style.height = "0 px";
         inputSection.style.display = "none";
         changeCatButton.style.display = "block";
-        /*Linh: Ist das wirklich n�tig?
-        if(firstConnect){
-            fragen.forEach(listQuestions);
-            firstConnect = false;
-        }
-        */
-
         questionSection.style.display = "inline-block";
         bottomSelector.style.display = "block";
         connectButton.innerHTML = "Quiz Admin";
-
         go.addEventListener("click",goQuiz);
-
-
     });
     // Hier erhaelt der Client die Fragen und speichert sie lokal.
     socket.on('showQuestions', function(data){
@@ -442,28 +420,25 @@ function quizmaster(){
         daten = data;
         raum = data.raum;
         fragen = data.allQuestions;
-        //socket.emit('updateQuestionsByCat');
         $(fragenSelector).empty();
 
         fragen.forEach(listQuestions);
-        console.log("Fragen:");
-        console.log(fragen);
+
     });
-    //AAA
+    // Hier werden die Fragen der neuen Kategorie eingetragen
     socket.on('updateQuestionsByCat', function(){
         $(fragenSelector).empty();
         fragen.forEach(listQuestions);
-        //showThisQuestion();
-        console.log("hier sind die Fragen " + fragen);
-        //showQuestionSection(fragen);
     });
+    // Kategorien werden gespeichert
     socket.on('tempCatNamesAndIDs', function(data){
-        //counter = 0;
+
         cats = data.allCats;
-        console.log(cats);
     });
     // Nach einem reset erhaelt der client die neue ID des alten Monitors
     socket.on('updateID',function(data){
+        console.log("idupdate:");
+        console.log(data);
         idInput.value = data;
     });
     // Wenn ein Spieler joined/leaved
@@ -484,6 +459,9 @@ function quizmaster(){
         }
 
     });
+    // Hier wird das Quiz gestartet
+    // Es werden alle Fragen die im HTML questionToggleOn haben
+    // zu dem Fragekatalog hinzugefuegt und an den Server gesendet
     function startQuiz(){
         var sendArray = [];
         var notPicked = [];
@@ -503,26 +481,11 @@ function quizmaster(){
         socket.emit('startQuiz in index', [value,questionCatalog]);
         go.innerHTML = "Reset";
     }
-/*
-     function resize () {
-        if (window.orientation == -90) {
-            document.getElementById('test').className = 'orientright';
-            //alert(document.getElementById('orient').className);
-        }
-        if (window.orientation == 90) {
-            document.getElementById('test').className = 'orientleft';
-        }
-        if (window.orientation == 0) {
-            document.getElementById('test').className = '';
-        }
-    };*/
 
 
+        // Leider nur in Chrome moeglich
         screen.orientation.lock('portrait').catch(function() {
             console.log('not chrome');
         });
-    /*
-    window.addEventListener('orientationchange', resize, false);
-    //window.addEventListener('resize', resize, false);
-    */
+
 }

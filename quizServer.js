@@ -1,29 +1,27 @@
-//var io;
+// Globale Variable fuer Zugriff von aussen
 var aktuelleFrage;
 
 exports.getFrage = function(){
   return aktuelleFrage;
 };
 exports.init = function(fragen,room,io){
- // io = nio;
+
   var raum = room;
-  console.log(raum +  " ist der Raum ");
+
 
   this.getFrage = function(){
     return aktuelleFrage;
   };
+  // Timer Wert
   var timer = 15;
+  // Timer Uebergangswert
   var timer2 = 4;
-  // Fragen vorbereiten
 
+  // Array fuer die aktuellen Fragen
   var Fragen = [];
-
- // var sammlung = fragen.toString().split(",");
-
   var anzahl = fragen.length;
-  //console.log(anzahl);
-  //console.log(fragen);
 
+  // Hier werden die erhaltenen "fragen" randomisiert und zu "Fragen" hinzugefuegt
   for ( var i = 0 ; i < anzahl; i++){
     var frage=[];
     var random= [];
@@ -41,14 +39,14 @@ exports.init = function(fragen,room,io){
 
     frage.push(fragen[i][2]);
 
-    //console.log(frage);
+
 
 
 
     Fragen.push(frage);
-   // console.log(Fragen);
-  }
 
+  }
+  // Funktionen um Events an die Clienten zu senden
   function showTimer(){
     io.sockets.in(raum).emit('timerUpdate',counter);
   };
@@ -65,31 +63,34 @@ exports.init = function(fragen,room,io){
     io.sockets.in(raum).emit('answerShow',aktuelleFrage[5]);
   }
 
-  console.log(Fragen);
 
 
-  // Logik starten
+
+  // Hilfsvariablen fuer Logik
   var pause = false;
 
   var counter = timer;
   var counter2 = timer2;
   var counter3 = 0;
+  // Diese Logik wird jede Sekunde ausgefuert und ueberprueft den aktuellen Stand
+  // der Timer Wert wird jedes mal um 1 verringert und wird bei 0 mit einer
+  // neuen Frage befuellt, sofern diese vorhanden ist, ansonsten wird das Ende mitgeteilt.
   function logic(){
 
     if (counter == timer && pause == false){
-      //console.log("Hier wird die Frage gepickt.");
+
       anzahl -= 1;
-      // Momentan nur anzeigen und l�schen der Frage
+
       aktuelleFrage = Fragen.pop();
       showQuestion();
-      //console.log(aktuelleFrage);
+
     }
     if (counter <= 0 && pause == false){
-      //console.log(counter);
+
       showTimer();
-      //console.log("Jetzt werden Antworten ausgewertet und Punkte vergeben.");
+
       getAnswer();
-      // Hier kommt ein Event um die aktuelle Antwort auszuwerten
+
       pause = true;
       if (anzahl == 0){
 
@@ -105,14 +106,14 @@ exports.init = function(fragen,room,io){
       counter = timer;
       }
     }else if(pause == false){
-      //console.log(counter);
+
       showTimer();
       counter -= 1;
     }
     else if (pause == true){
       if(counter2 <= 0){
         pause = false;
-        //console.log("pause wurde gefalsed");
+
         counter2 = timer2;
       }else if(counter2 == timer2){
         showAnswer();
@@ -125,18 +126,15 @@ exports.init = function(fragen,room,io){
   };
   var interval = setInterval(logic,1000);
 
-
+  // Funktion fuer einen Shuffle
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex ;
 
-    // While there remain elements to shuffle...
     while (0 !== currentIndex) {
 
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
-      // And swap it with the current element.
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;

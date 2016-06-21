@@ -1,4 +1,5 @@
 function score(){
+    // Selectoren
     var liste = document.getElementById("liste");
     var socket = io();
     var counter = 0;
@@ -7,25 +8,20 @@ function score(){
     var hidden = document.getElementById("hidden");
     var nr = parseInt(id.innerHTML);
 
+    // Gewinnerliste fuer den Raum wird erfragt
     socket.emit('getList',nr);
 
-
+    // Handler fuer das Erhalten der Liste
     socket.on('getListSuccess',function(data){
-        console.log("daten kamen" + data);/*
-        var len = data.length;
-        var daten = [];
-        for(var i = 0; i < len / 2;i++){
-            var teil = data.slice(2);
-            daten.push(teil);
-        }*/
+        console.log("daten kamen" + data);
         data.forEach(createListItem);
     });
-
+    // Wird durch Quizmaster ausgeloest
     socket.on('resetClients',function(){
         hidden.setAttribute("value",nr);
         formReset.submit();
     });
-
+    // Generiert die Gewinnerliste
     function createListItem(data){
         var listItem = document.createElement('li');
         if(counter % 3 == 0 ){
@@ -44,6 +40,7 @@ function score(){
 
         counter ++;
     };
+    // Anpassung fuer Desktops
     function changeStyles(){
         var width = window.innerWidth;
         if(width > 768){
@@ -52,7 +49,6 @@ function score(){
             logo.firstChild.style.height = "70px";
 
         }
-        //alert(width);
     }
     $(document).ready(function(){
         changeStyles();

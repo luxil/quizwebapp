@@ -1,32 +1,35 @@
 function client(){
-    //var user = prompt("Bitte gib deinen Usernamen ein:");
+
+    // Selectoren für die HTML Elemente
     var nick = document.getElementById("user");
     var raum = document.getElementById("nr");
     var form = document.getElementById("form");
     var hidden = document.getElementById("hidden");
-    var nr = raum.innerHTML;
-    var user = nick.innerHTML;
-    var socket = io();
-
-
-        var nummer=parseInt(nr);
-        var data=[user,nummer];
-        console.log(data);
-       socket.emit('addPlayer',data);
-
-    var currentPickedAnswer;
-    var score = 0;
-
-
     var a = document.getElementById("a");
     var b = document.getElementById("b");
     var c = document.getElementById("c");
     var d = document.getElementById("d");
-
-
-
+    var nr = raum.innerHTML;
+    var user = nick.innerHTML;
     var scoreLabel = document.getElementById("score");
 
+    //Globale Variablen
+    var currentPickedAnswer;
+    var score = 0;
+
+    // Startet die Websocketverbindung
+    var socket = io();
+    var nummer=parseInt(nr);
+    var data=[user,nummer];
+    socket.emit('addPlayer',data);
+
+
+
+
+
+
+
+    // Antworten werden auf ihren normalen Wert gesetzt
     function resetAnswer(){
         currentPickedAnswer = "0";
         a.style.backgroundColor = "#DFF0D8";
@@ -35,11 +38,10 @@ function client(){
         d.style.backgroundColor = "#F2DEDE";
 
     }
-
+    // Handler fuer den Click Event auf eines der Felder
     function changeAnswer(event){
         resetAnswer();
         var source = event.srcElement || event.target;
-        //console.log(source);
         switch (source){
             case a:
                 currentPickedAnswer = 1;
@@ -68,22 +70,25 @@ function client(){
 
 
 
-
+    // Socket Handler
+    // Handler zum Senden der Antwort nach Aufforderung
     socket.on('answerUpdate',function(){
         socket.emit('answer',currentPickedAnswer);
         resetAnswer();
     });
+    // Handler fuer Score Werte vom Server
     socket.on('updateScore',function(data){
         if(data != undefined){
             score = data;
             scoreLabel.innerHTML =  score + " Punkte";
         }
     });
+    // Handler fuer reset Event durch Quizmaster ausgeloest
     socket.on('resetClients',function(){
         hidden.setAttribute("value",user);
-        console.log(hidden);
         $("form").submit();
     });
+    // Anpassung der Styles fuer desktop
     function changeStyles(){
         var width = window.innerWidth;
         if(width > 768){
@@ -96,11 +101,13 @@ function client(){
 
 
         }
-        //alert(width);
     }
+    // Wenn das Dokument fertig geladen ist
     $(document).ready(function(){
         changeStyles();
     });
+
+    // Eventhandler werden an die Elemente gehaengt
     a.addEventListener("click",changeAnswer);
     b.addEventListener("click",changeAnswer);
     c.addEventListener("click",changeAnswer);

@@ -22,5 +22,16 @@ function start(){
         console.log("Connection established");
         $("form").submit();
     });
-
+    function changeStyles(){
+        var width = window.innerWidth;
+        if(width > 768){
+            var logo = document.getElementById("logo");
+            logo.firstChild.style.width = "70px";
+            logo.firstChild.style.height = "70px";
+        }
+        //alert(width);
+    }
+    $(document).ready(function(){
+       changeStyles();
+    });
 }

@@ -1,31 +1,36 @@
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
-        title Quiz Lobby
-        // Bootstrap
-        link(href='css/bootstrap.min.css', rel='stylesheet')
-        link(href='css/main2.css', rel='stylesheet')
-        link(href='css/bootstrap.min.css', rel='stylesheet')
-        script(src='js/lobby.js')
-        script(src='/socket.io/socket.io.js')
-        script(src='https://cdn.socket.io/socket.io-1.2.0.js')
-        script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
-    body(onload='lobby()')
-        #logo
-            img(src='https://w5rq22m8rig3fs3zefz5zucyr-wpengine.netdna-ssl.com/wp-content/themes/onesky/assets/images/customer-stories/quizup-logo.png', width="8%")
-            p#id Das Logo ist ein Lückenfüller
-        #lobby
-            #nickName Nickname
-            form(method='post', action='/client', id="form",style="z-index: 1" )
-                input#hidden(type='hidden', name='nr', value='')
-                input#nick.noEnterSubmit(type='text',value="",name="nick")
-                p
-                input#nameButton(type='submit',for='',value='Join')
-            #liste(style='visibility: hidden;z-index:0')
-            #resetName #{name}
-
-
-
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title Quiz Lobby
+    // Bootstrap
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    link(href='css/main2.css', rel='stylesheet')
+    link(href='css/bootstrap.min.css', rel='stylesheet')
+    script(src='js/lobby.js')
+    script(src='/socket.io/socket.io.js')
+    script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')
+  body(onload='lobby()')
+    #logo
+      img(src='images/logo4.gif')
+      p#id  
+    p  
+    p
+    br
+    .jumbotron(style='height: 200px; text-align: justify;    text-justify: inter-word;')
+      h2(style='text-align: center; word-spacing:0.4em; letter-spacing:0.4em; width: 100%;')
+        | QUIZ
+        p
+        | LOBBY
+    #lobby
+      form#form(method='post', action='/client', style='z-index: 1')
+        input#hidden(type='hidden', name='nr', value='')
+        input#nick.noEnterSubmit(type='text', value='', name='nick', placeholder='Nickname')
+        p
+        #nameArea
+          #nameButton Mitspielen
+      #liste(style='visibility: hidden;z-index:0')
+      #resetName

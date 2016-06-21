@@ -13,19 +13,9 @@ html(lang='en')
     script(src='/socket.io/socket.io.js')
     script(src='https://cdn.socket.io/socket.io-1.2.0.js')
   body(onload='start()')
-    nav.navbar
-      .container
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-          a.navbar-brand(href='#')
-            img(src='https://w5rq22m8rig3fs3zefz5zucyr-wpengine.netdna-ssl.com/wp-content/themes/onesky/assets/images/customer-stories/quizup-logo.png', width='30%')
-          p#id Das Logo ist nur ein Lückenfüller
-        #navbar.navbar-collapse.collapse
-          ul.nav.navbar-nav
-            //
-              <li class="active"><a href="#">Hilfe</a></li>
-              <li><a href="#about">Admin</a></li>
-        // /.nav-collapse
+    #logo
+      img(src='images/logo4.gif')
+      p#id 
     form#form(action='/monitor', method='post')
       input#hidden(name='hidden', type='hidden', value='')
     .jumbotron(style='height: 200px; text-align: justify;    text-justify: inter-word;')
@@ -36,7 +26,7 @@ html(lang='en')
       hr
     h2.text-center
       a(href='/quizmaster', style='color:#358ab2; text-decoration: none;') Quiz erstellen
-    el#socketID(style="visibility:hidden") #{reset}
+    el#socketID(style='visibility:hidden')
     //
       <p></p>
       <h2 class="text-center"><a href="/monitor" style="color:#b23535; text-decoration: none;">Quiz Monitor</a></h2>

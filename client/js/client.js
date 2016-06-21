@@ -84,6 +84,23 @@ function client(){
         console.log(hidden);
         $("form").submit();
     });
+    function changeStyles(){
+        var width = window.innerWidth;
+        if(width > 768){
+            var us = document.getElementById("user");
+            us.style.fontSize = "20px";
+            var ra = document.getElementById("raum");
+            ra.style.fontSize = "20px";
+            var sc = document.getElementById("score");
+            sc.style.fontSize = "20px";
+
+
+        }
+        //alert(width);
+    }
+    $(document).ready(function(){
+        changeStyles();
+    });
     a.addEventListener("click",changeAnswer);
     b.addEventListener("click",changeAnswer);
     c.addEventListener("click",changeAnswer);

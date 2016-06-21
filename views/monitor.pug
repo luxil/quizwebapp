@@ -12,20 +12,8 @@ html(lang='en')
         script(src='/socket.io/socket.io.js')
         script(src='https://cdn.socket.io/socket.io-1.2.0.js')
     body(onload='monitor()')
-        nav.navbar
-            .container
-                .navbar-header
-                    button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
-                    a.navbar-brand(href='#')
-                        img(src='https://w5rq22m8rig3fs3zefz5zucyr-wpengine.netdna-ssl.com/wp-content/themes/onesky/assets/images/customer-stories/quizup-logo.png', width='30%')
-                    p#id1 ID:
-                        el#id #{id}
-                #navbar.navbar-collapse.collapse
-                    ul.nav.navbar-nav
-                        //
-                          <li class="active"><a href="#">Hilfe</a></li>
-                          <li><a href="#about">Admin</a></li>
-                // /.nav-collapse
+    #logo
+      img(src='images/logo6.gif')
         .jumbotron(style='text-align: center; height: 200px;')
             h2
                 #question Warte auf Start durch den Quizmaster!

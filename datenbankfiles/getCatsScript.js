@@ -1,3 +1,7 @@
+/**
+ * hier werden die Kategorien aus der Datenbank aufgerufen und an den Admin gesendet
+ */
+
 var MongoClient = require('mongodb').MongoClient;
 var dbHost = 'mongodb://localhost:27017/test';
 var questionCatalog = 'questionCatalog';
@@ -76,5 +80,4 @@ var getBiggestCatID = function(docs){
 MongoClient.connect(dbHost, function(err, db){
     if ( err ) throw err;
     dbConn = db;
-    //actionMenu(dbConn, tempCatName, tempCatID);//////////////
 });
